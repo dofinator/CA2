@@ -35,13 +35,12 @@ public class Person implements Serializable {
     public Person() {
     }
 
-    public Person(String name, String street, String city, String zip, String phone, List<String> hobbies) {
+    public Person(String name, String street, String city, String zip, String phone) {
         this.name = name;
         this.street = street;
         this.city = city;
         this.zip = zip;
         this.phone = phone;
-        this.hobbies = hobbies;
     }
     
     public long getId() {
