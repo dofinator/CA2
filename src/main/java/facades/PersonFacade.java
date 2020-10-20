@@ -9,6 +9,7 @@ import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Query;
+import javax.persistence.TypedQuery;
 
 public class PersonFacade {
 
@@ -16,7 +17,7 @@ public class PersonFacade {
     private static EntityManagerFactory emf;
 
     //Private Constructor to ensure Singleton
-    private PersonFacade() {
+    PersonFacade() {
     }
 
     public static PersonFacade getPersonFacade(EntityManagerFactory _emf) {
@@ -51,28 +52,28 @@ public class PersonFacade {
             Query query = em.createQuery("SELECT p FROM Person p JOIN p.hobbies hobbies WHERE hobbies.name = :hobby");
             query.setParameter("hobby", hobby);
             List<Person> personList = query.getResultList();
-
-            return new PersonsDTO(personList);
-        } finally {
-            em.close();
-        }
-
-    }
-    
-    //Get all persons living in a given city
-    public PersonsDTO getAllPhonesByCity(String city){
-        EntityManager em = emf.createEntityManager();
-        try{
-            Query query = em.createQuery("SELECT p FROM Person p WHERE p.address.cityInfo.city = :city");
-            query.setParameter("city", city);
-            List<Person> personList = query.getResultList();
             
             return new PersonsDTO(personList);
         } finally {
             em.close();
         }
+
     }
-    
+
+    //Get all persons living in a given city
+    public PersonsDTO getAllPhonesByCity(String city) {
+        EntityManager em = emf.createEntityManager();
+        try {
+            Query query = em.createQuery("SELECT p FROM Person p WHERE p.address.cityInfo.city = :city");
+            query.setParameter("city", city);
+            List<Person> personList = query.getResultList();
+
+            return new PersonsDTO(personList);
+        } finally {
+            em.close();
+        }
+    }
+
     //get the number of people with a given hobby
     public long getHobbyCount(String hobby) {
         EntityManager em = emf.createEntityManager();
@@ -150,6 +151,6 @@ public class PersonFacade {
             em.close();
         }
     }
-*/
+     */
 
 }
