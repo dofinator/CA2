@@ -21,11 +21,9 @@ public class Phone implements Serializable {
     private Person person;
 
     public Phone() {
-
     }
 
     public Phone(String number, String description) {
-
         this.number = number;
         this.description = description;
     }
@@ -58,8 +56,13 @@ public class Phone implements Serializable {
         return person;
     }
 
-    public void setPerson(Person person) {
-        this.person = person;
+    public void addPerson(Person person) {
+         this.person = person;
+        if (person != null) {
+            person.getPhones().add(this);
+        }
     }
+
+   
 
 }

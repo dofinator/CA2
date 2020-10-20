@@ -52,14 +52,6 @@ public class Person implements Serializable {
         this.id = id;
     }
 
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
     public String getFirstName() {
         return firstName;
     }
@@ -76,29 +68,48 @@ public class Person implements Serializable {
         this.lastName = lastName;
     }
 
-    /* public Phone getPhone() {
-        return phone;
-    }
-    
-
-    public void setPhone(Phone phone) {
-        this.phone = phone;
-    }
-     */
-    public Address getAddress() {
-        return address;
+    public String getEmail() {
+        return email;
     }
 
-    public void setAddress(Address address) {
-        this.address = address;
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public List<Phone> getPhones() {
+        return phones;
+    }
+
+    public void addPhone(Phone phone) {
+        this.phones.add(phone);
+        if(phone != null){
+            phone.addPerson(this);
+        }
     }
 
     public List<Hobby> getHobbies() {
         return hobbies;
     }
 
-    public void setHobbies(List<Hobby> hobbies) {
-        this.hobbies = hobbies;
+    public void addHobby(Hobby hobby) {
+        this.hobbies.add(hobby);
+        if(hobby != null){
+            hobby.getPersons().add(this);
+            
+        }
     }
+
+    public Address getAddress() {
+        return address;
+    }
+
+    public void addAdress(Address address) {
+        this.address = address;
+        if (address != null) {
+            address.getPersons().add(this);
+        }
+    }
+
+    
 
 }

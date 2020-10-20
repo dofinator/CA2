@@ -1,4 +1,3 @@
-
 package entities;
 
 import java.io.Serializable;
@@ -11,7 +10,6 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 
-
 @Entity
 public class CityInfo implements Serializable {
 
@@ -21,7 +19,7 @@ public class CityInfo implements Serializable {
     private long id;
     private String zip;
     private String city;
-   
+
     @OneToMany(mappedBy = "cityInfo", cascade = CascadeType.PERSIST)
     List<Address> addresses;
 
@@ -34,14 +32,9 @@ public class CityInfo implements Serializable {
         this.addresses = new ArrayList();
     }
 
-    public List<Address> getAddresses() {
-        return addresses;
+    public String getZip() {
+        return zip;
     }
-
-    public void setAddresses(List<Address> addresses) {
-        this.addresses = addresses;
-    }
-    
 
     public long getId() {
         return id;
@@ -49,10 +42,6 @@ public class CityInfo implements Serializable {
 
     public void setId(long id) {
         this.id = id;
-    }
-
-    public String getZip() {
-        return zip;
     }
 
     public void setZip(String zip) {
@@ -67,8 +56,16 @@ public class CityInfo implements Serializable {
         this.city = city;
     }
 
+    public List<Address> getAddresses() {
+        return addresses;
+    }
 
+    public void addAdress(Address address) {
+        this.addresses.add(address);
+        if(address != null){
+            address.setCityInfo(this);
+        }
+        
+    }
 
-    
-    
 }
