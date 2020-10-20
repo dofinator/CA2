@@ -1,7 +1,9 @@
 package facades;
 
+import dto.PersonsDTO;
 import entities.CityInfo;
 import entities.Person;
+import entities.Phone;
 import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
@@ -42,18 +44,41 @@ public class PersonFacade {
     }
 
     //Get all persons with a given hobby
-    //Get all phone numbers for a person living in a given city
+    public PersonsDTO getAllPersonsByHobby(String hobby) {
+        EntityManager em = emf.createEntityManager();
+        try {
+            Query query = em.createQuery("SELECT p FROM Person p JOIN p.hobbies hobbies WHERE hobbies.name = :hobby");
+            query.setParameter("hobby", hobby);
+            List<Person> personList = query.getResultList();
+
+            return new PersonsDTO(personList);
+        } finally {
+            em.close();
+        }
+
+    }
+    
+    //Get all persons living in a given city
+    public PersonsDTO getAllPhonesByCity(String city){
+        EntityManager em = emf.createEntityManager();
+        try{
+            Query query = em.createQuery("SELECT p FROM Person p WHERE p.address.cityInfo.city = :city");
+            query.setParameter("city", city);
+            List<Person> personList = query.getResultList();
+            
+            return new PersonsDTO(personList);
+        } finally {
+            em.close();
+        }
+    }
+    
     //get the number of people with a given hobby
     public long getHobbyCount(String hobby) {
         EntityManager em = emf.createEntityManager();
         try {
-            Query query = em.createQuery("SELECT h.id FROM Hobby h WHERE h.name = :hobby");
+            Query query = em.createQuery("SELECT COUNT(p) FROM Person p JOIN p.hobbies hobbies WHERE hobbies.name = :hobby");
             query.setParameter("hobby", hobby);
-            long hobbyId = (long) query.getSingleResult();
-
-            Query query2 = em.createQuery("SELECT COUNT(hp) FROM HOBBY_PERSON hp WHERE hp.hobbies_ID = :hobbyId");
-            query2.setParameter("hobbyId", hobbyId);
-            long hobbyCount = (long) query2.getSingleResult();
+            long hobbyCount = (long) query.getSingleResult();
 
             return hobbyCount;
         } finally {
@@ -77,5 +102,17 @@ public class PersonFacade {
     //create a person
     //edit a person
     //delete a person
+    /*
+    public String deletePerson(long id){
+        EntityManager em = emf.createEntityManager();
+        try{
+            Query query = em.createQuery("DELETE p FROM Person p WHERE p.id = :id");
+            
+            return 
+        } finally {
+            em.close();
+        }
+    }
+*/
 
 }
