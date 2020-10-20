@@ -8,10 +8,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Query;
 
-/**
- *
- * Rename Class to a relevant name Add add relevant facade methods
- */
+
 public class PersonFacade {
 
     private static PersonFacade instance;
@@ -21,11 +18,7 @@ public class PersonFacade {
     private PersonFacade() {
     }
 
-    /**
-     *
-     * @param _emf
-     * @return an instance of this facade class.
-     */
+
     public static PersonFacade getPersonFacade(EntityManagerFactory _emf) {
         if (instance == null) {
             emf = _emf;
@@ -38,14 +31,15 @@ public class PersonFacade {
         return emf.createEntityManager();
     }
 
-    //TODO Remove/Change this before use
+
     public long getPersonCount() {
         EntityManager em = emf.createEntityManager();
-        try {
-            long personCount = (long) em.createQuery("SELECT COUNT(r) FROM Person r").getSingleResult();
 
-            return personCount;
-        } finally {
+        try{
+            long renameMeCount = (long)em.createQuery("SELECT COUNT(p) FROM Person p").getSingleResult();
+            return renameMeCount;
+        }finally{  
+
             em.close();
         }
 

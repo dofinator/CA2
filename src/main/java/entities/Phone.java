@@ -1,21 +1,13 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package entities;
 
 import java.io.Serializable;
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 
-/**
- *
- * @author sebas
- */
 @Entity
 public class Phone implements Serializable {
 
@@ -29,11 +21,11 @@ public class Phone implements Serializable {
     private Person person;
 
     public Phone() {
-        
+
     }
 
-    public Phone(long id, String number, String description) {
-        this.id = id;
+    public Phone(String number, String description) {
+
         this.number = number;
         this.description = description;
     }
@@ -61,4 +53,13 @@ public class Phone implements Serializable {
     public void setDescription(String description) {
         this.description = description;
     }
+
+    public Person getPerson() {
+        return person;
+    }
+
+    public void setPerson(Person person) {
+        this.person = person;
+    }
+
 }

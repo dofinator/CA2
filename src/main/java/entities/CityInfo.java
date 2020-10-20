@@ -1,21 +1,17 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package entities;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 
-/**
- *
- * @author sebas
- */
+
 @Entity
 public class CityInfo implements Serializable {
 
@@ -25,8 +21,9 @@ public class CityInfo implements Serializable {
     private long id;
     private String zip;
     private String city;
-    @OneToMany (mappedBy = "cityInfo")
-    private Address address;
+   
+    @OneToMany(mappedBy = "cityInfo", cascade = CascadeType.PERSIST)
+    List<Address> addresses;
 
     public CityInfo() {
     }
@@ -34,7 +31,17 @@ public class CityInfo implements Serializable {
     public CityInfo(String zip, String city) {
         this.zip = zip;
         this.city = city;
+        this.addresses = new ArrayList();
     }
+
+    public List<Address> getAddresses() {
+        return addresses;
+    }
+
+    public void setAddresses(List<Address> addresses) {
+        this.addresses = addresses;
+    }
+    
 
     public long getId() {
         return id;
@@ -60,5 +67,8 @@ public class CityInfo implements Serializable {
         this.city = city;
     }
 
+
+
+    
     
 }

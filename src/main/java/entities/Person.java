@@ -1,6 +1,7 @@
 package entities;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
@@ -12,7 +13,6 @@ import javax.persistence.ManyToOne;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 
-
 @Entity
 @NamedQuery(name = "Person.deleteAllRows", query = "DELETE from Person")
 public class Person implements Serializable {
@@ -21,28 +21,27 @@ public class Person implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
-    private String name;
-    private String street;
-    private String city;
-    private String zip;
-    @OneToMany (cascade = CascadeType.PERSIST)
-    private String phone;
-    @ManyToMany (mappedBy = "persons", cascade = CascadeType.PERSIST)
-    private List<String> hobbies;
-    @ManyToOne (cascade = CascadeType.PERSIST)
+    private String firstName;
+    private String lastName;
+    private String email;
+    @OneToMany(mappedBy = "person", cascade = CascadeType.PERSIST)
+    private List<Phone> phones;
+    @ManyToMany(mappedBy = "persons", cascade = CascadeType.PERSIST)
+    private List<Hobby> hobbies;
+    @ManyToOne(cascade = CascadeType.PERSIST)
     private Address address;
-    
+
     public Person() {
     }
 
-    public Person(String name, String street, String city, String zip, String phone) {
-        this.name = name;
-        this.street = street;
-        this.city = city;
-        this.zip = zip;
-        this.phone = phone;
+    public Person(String firstName, String lastName, String email) {
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.email = email;
+        this.hobbies = new ArrayList();
+        this.phones = new ArrayList();
     }
-    
+
     public long getId() {
         return id;
     }
@@ -51,52 +50,53 @@ public class Person implements Serializable {
         this.id = id;
     }
 
-    public String getName() {
-        return name;
+    public String getEmail() {
+        return email;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setEmail(String email) {
+        this.email = email;
     }
 
-    public String getStreet() {
-        return street;
+    public String getFirstName() {
+        return firstName;
     }
 
-    public void setStreet(String street) {
-        this.street = street;
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
     }
 
-    public String getCity() {
-        return city;
+    public String getLastName() {
+        return lastName;
     }
 
-    public void setCity(String city) {
-        this.city = city;
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
     }
 
-    public String getZip() {
-        return zip;
-    }
-
-    public void setZip(String zip) {
-        this.zip = zip;
-    }
-
-    public String getPhone() {
+    /* public Phone getPhone() {
         return phone;
     }
+    
 
-    public void setPhone(String phone) {
+    public void setPhone(Phone phone) {
         this.phone = phone;
     }
+     */
+    public Address getAddress() {
+        return address;
+    }
 
-    public List<String> getHobbies() {
+    public void setAddress(Address address) {
+        this.address = address;
+    }
+
+    public List<Hobby> getHobbies() {
         return hobbies;
     }
 
-    public void setHobbies(List<String> hobbies) {
+    public void setHobbies(List<Hobby> hobbies) {
         this.hobbies = hobbies;
     }
-    
+
 }

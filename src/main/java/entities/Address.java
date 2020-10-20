@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package entities;
 
 import java.io.Serializable;
@@ -14,10 +9,6 @@ import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 
-/**
- *
- * @author sebas
- */
 @Entity
 public class Address implements Serializable {
 
@@ -26,10 +17,10 @@ public class Address implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
     private String street;
-    private String Additionalinfo;
-    @OneToMany (mappedBy = "address")
-    private Person person;
-    @ManyToOne (cascade = CascadeType.PERSIST)
+    private String additionalInfo;
+    // @OneToMany(mappedBy = "address")
+    //private Person person;
+    @ManyToOne
     private CityInfo cityInfo;
 
     public Address() {
@@ -37,7 +28,7 @@ public class Address implements Serializable {
 
     public Address(String street, String Additionalinfo) {
         this.street = street;
-        this.Additionalinfo = Additionalinfo;
+        this.additionalInfo = Additionalinfo;
     }
 
     public long getId() {
@@ -57,14 +48,11 @@ public class Address implements Serializable {
     }
 
     public String getAdditionalinfo() {
-        return Additionalinfo;
+        return additionalInfo;
     }
 
-    public void setAdditionalinfo(String Additionalinfo) {
-        this.Additionalinfo = Additionalinfo;
+    public void setAdditionalinfo(String additionalInfo) {
+        this.additionalInfo = additionalInfo;
     }
-    
-    
-    
-    
+
 }
