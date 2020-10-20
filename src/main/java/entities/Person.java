@@ -89,7 +89,7 @@ public class Person implements Serializable {
     public List<Hobby> getHobbies() {
         return hobbies;
     }
-
+    
     public void addHobby(Hobby hobby) {
         this.hobbies.add(hobby);
         if(hobby != null){
@@ -108,7 +108,20 @@ public class Person implements Serializable {
             address.getPersons().add(this);
         }
     }
-
     
+    public void setStreet(String street){
+        this.address.setStreet(street);
+    }
 
+    public void setCity(String city){
+        this.address.getCityInfo().setCity(city);
+    }
+    
+    public void setZip(String zip){
+        this.address.getCityInfo().setZip(zip);
+    }
+    
+    public void setPhone(String phoneNumber){
+        this.phones.get(0).setNumber(phoneNumber);
+    }
 }

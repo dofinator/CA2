@@ -1,5 +1,6 @@
 package facades;
 
+import dto.PersonDTO;
 import dto.PersonsDTO;
 import entities.CityInfo;
 import entities.Person;
@@ -99,8 +100,44 @@ public class PersonFacade {
             em.close();
         }
     }
+    
     //create a person
+    public PersonDTO createNewPerson(String fName, String lName, String email){
+        EntityManager em = emf.createEntityManager();
+        try{
+            Person p = new Person(fName, lName, email);
+            
+            em.getTransaction();
+            em.persist(p);
+            em.getTransaction().commit();
+            
+            return new PersonDTO(p);
+        } finally {
+            em.close();
+        }
+    }
+    
     //edit a person
+    public PersonDTO editPerson(PersonDTO pDTO){
+        EntityManager em = emf.createEntityManager();
+        
+        Person person = em.find(Person.class, pDTO.getId());
+        
+        try{
+            person.setFirstName(pDTO.getfName());
+            person.setLastName(pDTO.getlName());
+            person.setEmail(pDTO.getEmail());
+            person.setStreet(pDTO.getStreet());
+            person.setCity(pDTO.getCity());
+            person.setZip(pDTO.getZip());
+            person.setPhone(pDTO.getPhones().get(0).getNumber());
+            
+            return pDTO;
+        } finally {
+            em.close();
+        }
+    }
+    
     //delete a person
     /*
     public String deletePerson(long id){
