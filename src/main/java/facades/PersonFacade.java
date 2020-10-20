@@ -40,4 +40,42 @@ public class PersonFacade {
         }
 
     }
+
+    //Get all persons with a given hobby
+    //Get all phone numbers for a person living in a given city
+    //get the number of people with a given hobby
+    public long getHobbyCount(String hobby) {
+        EntityManager em = emf.createEntityManager();
+        try {
+            Query query = em.createQuery("SELECT h.id FROM Hobby h WHERE h.name = :hobby");
+            query.setParameter("hobby", hobby);
+            long hobbyId = (long) query.getSingleResult();
+
+            Query query2 = em.createQuery("SELECT COUNT(hp) FROM HOBBY_PERSON hp WHERE hp.hobbies_ID = :hobbyId");
+            query2.setParameter("hobbyId", hobbyId);
+            long hobbyCount = (long) query2.getSingleResult();
+
+            return hobbyCount;
+        } finally {
+            em.close();
+        }
+
+    }
+
+    //get a list of all zip codes in DK
+    public List<String> getAllZipCodes() {
+        EntityManager em = emf.createEntityManager();
+        try {
+            Query query = em.createQuery("SELECT c.zip FROM CityInfo c");
+            List<String> listOfAllZipCodes = query.getResultList();
+
+            return listOfAllZipCodes;
+        } finally {
+            em.close();
+        }
+    }
+    //create a person
+    //edit a person
+    //delete a person
+
 }
