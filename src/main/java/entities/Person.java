@@ -24,10 +24,10 @@ public class Person implements Serializable {
     private String firstName;
     private String lastName;
     private String email;
-    @OneToMany(mappedBy = "person")
-    private Phone phone;
+    @OneToMany(mappedBy = "person", cascade = CascadeType.PERSIST)
+    private List<Phone> phones;
     @ManyToMany(mappedBy = "persons", cascade = CascadeType.PERSIST)
-    private List<String> hobbies;
+    private List<Hobby> hobbies;
     @ManyToOne(cascade = CascadeType.PERSIST)
     private Address address;
 
@@ -39,6 +39,7 @@ public class Person implements Serializable {
         this.lastName = lastName;
         this.email = email;
         this.hobbies = new ArrayList();
+        this.phones = new ArrayList();
     }
 
     public long getId() {
@@ -73,8 +74,7 @@ public class Person implements Serializable {
         this.lastName = lastName;
     }
 
-    
-    public Phone getPhone() {
+    /* public Phone getPhone() {
         return phone;
     }
     
@@ -82,7 +82,7 @@ public class Person implements Serializable {
     public void setPhone(Phone phone) {
         this.phone = phone;
     }
-
+     */
     public Address getAddress() {
         return address;
     }
@@ -91,11 +91,11 @@ public class Person implements Serializable {
         this.address = address;
     }
 
-    public List<String> getHobbies() {
+    public List<Hobby> getHobbies() {
         return hobbies;
     }
 
-    public void setHobbies(List<String> hobbies) {
+    public void setHobbies(List<Hobby> hobbies) {
         this.hobbies = hobbies;
     }
 

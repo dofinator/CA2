@@ -1,4 +1,3 @@
-
 package entities;
 
 import java.io.Serializable;
@@ -18,15 +17,15 @@ public class Phone implements Serializable {
     private long id;
     private String number;
     private String description;
-    @ManyToOne(cascade = CascadeType.PERSIST)
+    @ManyToOne
     private Person person;
 
     public Phone() {
-        
+
     }
 
-    public Phone(long id, String number, String description) {
-        this.id = id;
+    public Phone(String number, String description) {
+
         this.number = number;
         this.description = description;
     }
@@ -54,4 +53,13 @@ public class Phone implements Serializable {
     public void setDescription(String description) {
         this.description = description;
     }
+
+    public Person getPerson() {
+        return person;
+    }
+
+    public void setPerson(Person person) {
+        this.person = person;
+    }
+
 }
