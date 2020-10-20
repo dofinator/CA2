@@ -29,6 +29,7 @@ public class Address implements Serializable {
     @ManyToOne
     private CityInfo cityInfo;
 
+    
     public Address() {
     }
 
@@ -36,14 +37,6 @@ public class Address implements Serializable {
         this.street = street;
         this.additionalInfo = Additionalinfo;
         this.persons = new ArrayList();
-    }
-
-    public List<Person> getPersons() {
-        return persons;
-    }
-
-    public void setPersons(List<Person> persons) {
-        this.persons = persons;
     }
 
     public long getId() {
@@ -54,6 +47,7 @@ public class Address implements Serializable {
         this.id = id;
     }
 
+    
     public String getStreet() {
         return street;
     }
@@ -62,12 +56,32 @@ public class Address implements Serializable {
         this.street = street;
     }
 
-    public String getAdditionalinfo() {
+    public String getAdditionalInfo() {
         return additionalInfo;
     }
 
-    public void setAdditionalinfo(String additionalInfo) {
+    public void setAdditionalInfo(String additionalInfo) {
         this.additionalInfo = additionalInfo;
     }
+
+    public List<Person> getPersons() {
+        return persons;
+    }
+
+    public void setPersons(List<Person> persons) {
+        this.persons = persons;
+    }
+
+    public CityInfo getCityInfo() {
+        return cityInfo;
+    }
+
+    public void setCityInfo(CityInfo cityInfo) {
+        this.cityInfo = cityInfo;
+    }
+
+    
+    
+  
 
 }

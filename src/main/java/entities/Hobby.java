@@ -1,8 +1,4 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package entities;
 
 import java.io.Serializable;
@@ -36,6 +32,14 @@ public class Hobby implements Serializable {
         this.description = description;
         this.persons = new ArrayList();
     }
+
+    public long getId() {
+        return id;
+    }
+
+    public void setId(long id) {
+        this.id = id;
+    }
     
     public String getName() {
         return name;
@@ -53,14 +57,17 @@ public class Hobby implements Serializable {
         this.description = description;
     }
 
-    public long getId() {
-        return id;
+    public List<Person> getPersons() {
+        return persons;
     }
 
-    public void setId(long id) {
-        this.id = id;
+    public void addPerson(Person person) {
+        this.persons.add(person);
+        if(person != null){
+            person.getHobbies().add(this);
+            
+        }
     }
-    
     
     
 }
