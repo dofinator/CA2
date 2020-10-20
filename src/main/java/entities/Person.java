@@ -29,7 +29,6 @@ public class Person implements Serializable {
     @ManyToMany(mappedBy = "persons", cascade = CascadeType.PERSIST)
     private List<Hobby> hobbies;
     
-    
     @ManyToOne
     private Address address;
 
