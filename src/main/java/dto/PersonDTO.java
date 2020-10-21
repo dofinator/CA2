@@ -16,6 +16,7 @@ public class PersonDTO {
     private String zip;
     private List<Hobby> hobbies;
     private List<Phone> phones;
+    private String additionalInfo;
 
     public PersonDTO(Person person) {
         this.id = person.getId();
@@ -27,6 +28,7 @@ public class PersonDTO {
         this.zip = person.getAddress().getCityInfo().getZip();
         this.hobbies = person.getHobbies();
         this.phones = person.getPhones();
+        this.additionalInfo = person.getAddress().getAdditionalInfo();
     }
     
 
@@ -37,6 +39,16 @@ public class PersonDTO {
     public void setId(long id) {
         this.id = id;
     }
+
+    public String getAdditionalInfo() {
+        return additionalInfo;
+    }
+
+    public void setAdditionalInfo(String additionalInfo) {
+        this.additionalInfo = additionalInfo;
+    }
+    
+    
 
     public String getfName() {
         return fName;
@@ -81,6 +93,7 @@ public class PersonDTO {
     public String getZip() {
         return zip;
     }
+    
 
     public void setZip(String zip) {
         this.zip = zip;

@@ -109,7 +109,7 @@ public class PersonFacade {
         EntityManager em = emf.createEntityManager();
         try{
             Person p = new Person(person.getfName(), person.getlName(), person.getEmail());
-            Address address = new Address(person.getStreet(), person.getCity());
+            Address address = new Address(person.getStreet(), person.getAdditionalInfo());
             CityInfo cityInfo = new CityInfo(person.getZip(), person.getCity());
             p.addAdress(address);
             cityInfo.addAdress(address);
