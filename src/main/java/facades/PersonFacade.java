@@ -132,25 +132,21 @@ public class PersonFacade {
     
     //edit a person
     public PersonDTO editPerson(PersonDTO pDTO){
-         EntityManager em = emf.createEntityManager();
+      EntityManager em = emf.createEntityManager();
         Person person = em.find(Person.class, pDTO.getId());
         
-      
+        person.setFirstName(pDTO.getfName());
+        person.setLastName(pDTO.getlName());
+        person.setEmail(pDTO.getEmail());
+        person.getAddress().setStreet(pDTO.getStreet());
         
-        person.setFirstName(p.getfName());
-        person.setLastName(p.getlName());
-        person.setPhone(p.getPhone());
-        person.getAddress().setStreet(p.getStreet());
-        person.getAddress().setZip(p.getZip());
-        person.getAddress().setCity(p.getCity());
-
         try {
             em.getTransaction().begin();
-
+            
             em.merge(person);
-
+            
             em.getTransaction().commit();
-
+            
             return new PersonDTO(person);
         } finally {
             em.close();
