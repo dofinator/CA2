@@ -125,6 +125,7 @@ public class PersonFacade {
         Person person = em.find(Person.class, pDTO.getId());
         
         try{
+            
             person.setFirstName(pDTO.getfName());
             person.setLastName(pDTO.getlName());
             person.setEmail(pDTO.getEmail());
