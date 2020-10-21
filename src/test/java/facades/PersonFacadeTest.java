@@ -103,7 +103,7 @@ public class PersonFacadeTest {
     
     @Test
     public void testGetAllPersonsByCity(){
-        PersonsDTO p = facade.getAllPhonesByCity("charlottenlund");
+        PersonsDTO p = facade.getAllPersonsByCity("charlottenlund");
         int exp = 2;
         assertEquals(exp, p.getAll().size());
     }
