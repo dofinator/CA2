@@ -2,7 +2,9 @@ package facades;
 
 import dto.PersonDTO;
 import dto.PersonsDTO;
+import entities.Address;
 import entities.CityInfo;
+import entities.Hobby;
 import entities.Person;
 import entities.Phone;
 import java.util.List;
@@ -61,7 +63,7 @@ public class PersonFacade {
     }
 
     //Get all persons living in a given city
-    public PersonsDTO getAllPhonesByCity(String city) {
+    public PersonsDTO getAllPersonsByCity(String city) {
         EntityManager em = emf.createEntityManager();
         try {
             Query query = em.createQuery("SELECT p FROM Person p WHERE p.address.cityInfo.city = :city");
@@ -103,11 +105,21 @@ public class PersonFacade {
     }
     
     //create a person
-    public PersonDTO createNewPerson(String fName, String lName, String email){
+    public PersonDTO createNewPerson(PersonDTO person ){
         EntityManager em = emf.createEntityManager();
         try{
-            Person p = new Person(fName, lName, email);
-            
+            Person p = new Person(person.getfName(), person.getlName(), person.getEmail());
+            Address address = new Address(person.getStreet(), person.getAdditionalInfo());
+            CityInfo cityInfo = new CityInfo(person.getZip(), person.getCity());
+            p.addAdress(address);
+            cityInfo.addAdress(address);
+            for (Hobby hobby : person.getHobbies()) {
+                p.addHobby(hobby);
+            }
+            for(Phone phone: person.getPhones()){
+                p.addPhone(phone);
+            }
+                      
             em.getTransaction();
             em.persist(p);
             em.getTransaction().commit();

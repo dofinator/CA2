@@ -25,15 +25,17 @@ public class PersonFacadeTest {
 
     private static EntityManagerFactory emf;
     private static PersonFacade facade;
-    private Person p1 = new Person("Sebastian", "Godsk", "email@email.com");
-    private Person p2 = new Person("Sumit", "Dey", "Taarstrup@email.dk");
-    private Hobby fodbold = new Hobby("fodbold", "spark til bold");
-    private Hobby håndbold = new Hobby("håndbold", "kast med bold");
-    private CityInfo charlottenlund = new CityInfo("2920", "charlottenlund");
-    private Address hovmarksvej = new Address("hovmarksvej", "10, st.tv");
-    private Address skovvej = new Address("skovvej", "14, st.th");
-    private Phone phone1 = new Phone("44444444", "mobil");
-    private Phone phone2 = new Phone("44444444", "hjemmetelefon");
+    private static Person p1 = new Person("Sebastian", "Godsk", "email@email.com");
+    private static Person p2 = new Person("Sumit", "Dey", "Taarstrup@email.dk");
+    private static Hobby fodbold = new Hobby("fodbold", "spark til bold");
+    private static Hobby håndbold = new Hobby("håndbold", "kast med bold");
+    private static CityInfo charlottenlund = new CityInfo("2920", "charlottenlund");
+    private static CityInfo gentofte = new CityInfo("2920", "gentofte");
+    private static CityInfo hellerrup = new CityInfo("2900", "hellerrup");
+    private static Address hovmarksvej = new Address("hovmarksvej", "10, st.tv");
+    private static Address skovvej = new Address("skovvej", "14, st.th");
+    private static Phone phone1 = new Phone("44444444", "mobil");
+    private static Phone phone2 = new Phone("44444444", "hjemmetelefon");
     
 
     public PersonFacadeTest() {
@@ -43,28 +45,35 @@ public class PersonFacadeTest {
     public static void setUpClass() {
         emf = EMF_Creator.createEntityManagerFactoryForTest();
         facade = PersonFacade.getPersonFacade(emf);
-    }
-
-    @AfterAll
-    public static void tearDownClass() {
-//        Clean up database after test is done or use a persistence unit with drop-and-create to start up clean on every test
-    }
-
-    // Setup the DataBase in a known state BEFORE EACH TEST
-    //TODO -- Make sure to change the code below to use YOUR OWN entity class
-    @BeforeEach
-    public void setUp() {
-        EntityManager em = emf.createEntityManager();
+         EntityManager em = emf.createEntityManager();
         try {
             em.getTransaction().begin();
-            //em.createNativeQuery("DROP DATABASE startcode_test").executeUpdate();
-            //em.createNativeQuery("alter table CAR AUTO_INCREMENT = 1").executeUpdate();
-
-            em.persist(p1);
-            em.persist(p2);
-            em.persist(fodbold);
+            
+            hovmarksvej.setCityInfo(charlottenlund);
+            skovvej.setCityInfo(charlottenlund);
+            
+            p1.addAdress(skovvej);
+            p2.addAdress(hovmarksvej);
             p1.addHobby(fodbold);
             p2.addHobby(fodbold);
+            
+            em.persist(fodbold);
+            em.persist(charlottenlund);
+            em.persist(hovmarksvej);
+            em.persist(skovvej);
+            
+            
+            
+            
+            em.persist(p1);
+            em.persist(p2);
+            
+            em.persist(gentofte);
+            em.persist(hellerrup);
+            
+            
+          
+            
 
             em.getTransaction().commit();
         } finally {
@@ -72,19 +81,51 @@ public class PersonFacadeTest {
         }
     }
 
-    @AfterEach
-    public void tearDown() {
-//        Remove any data after each test was run
+    @AfterAll
+    public static void tearDownClass() {
     }
 
-    // TODO: Delete or change this method 
+   
+
+    @AfterEach
+    public void tearDown() {
+    }
+
     @Test
     public void testGetAllPersonsByHobby() {
          
-        PersonsDTO ost = facade.getAllPersonsByHobby("fodbold");
+        PersonsDTO p = facade.getAllPersonsByHobby("fodbold");
         int exp = 2;
 
-        assertEquals(ost.getAll().size(), exp);
+        assertEquals(exp, p.getAll().size());
     }
 
+    
+    @Test
+    public void testGetAllPersonsByCity(){
+        PersonsDTO p = facade.getAllPersonsByCity("charlottenlund");
+        int exp = 2;
+        assertEquals(exp, p.getAll().size());
+    }
+    
+    @Test
+    public void testGetHobbyCount(){
+        long count = facade.getHobbyCount("fodbold");
+        int exp = 2;
+        
+        assertEquals(exp, count);
+      
+    }
+    
+    
+    @Test
+    public void testGetAllZipCodes(){
+        List <String> zip = facade.getAllZipCodes();
+        int exp = 3;
+        
+        assertEquals(exp, zip.size());
+    }
+    
+    
+    
 }
