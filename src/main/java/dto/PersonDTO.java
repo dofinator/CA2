@@ -37,7 +37,7 @@ public class PersonDTO {
             this.phones.add(new PhoneDTO(phone));
         }
       
-        this.additionalInfo = person.getAddress().getAdditionalInfo();
+        
     }
 
     public long getId() {
@@ -48,13 +48,9 @@ public class PersonDTO {
         this.id = id;
     }
 
-    public String getAdditionalInfo() {
-        return additionalInfo;
-    }
+   
 
-    public void setAdditionalInfo(String additionalInfo) {
-        this.additionalInfo = additionalInfo;
-    }
+   
     
     
 
