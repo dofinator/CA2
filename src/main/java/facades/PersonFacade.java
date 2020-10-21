@@ -1,7 +1,9 @@
 package facades;
 
+import dto.HobbyDTO;
 import dto.PersonDTO;
 import dto.PersonsDTO;
+import dto.PhoneDTO;
 import entities.Address;
 import entities.CityInfo;
 import entities.Hobby;
@@ -51,7 +53,7 @@ public class PersonFacade {
     public PersonsDTO getAllPersonsByHobby(String hobby) {
         EntityManager em = emf.createEntityManager();
         try {
-            Query query = em.createQuery("SELECT p FROM Person p JOIN p.hobbies hobbies WHERE hobbies.name = :hobby");
+            Query query = em.createQuery("SELECT p FROM Person p JOIN p.hobbies hobbies WHERE hobbies.name = :hobby", Person.class);
             query.setParameter("hobby", hobby);
             List<Person> personList = query.getResultList();
             
@@ -105,19 +107,19 @@ public class PersonFacade {
     }
     
     //create a person
-    public PersonDTO createNewPerson(PersonDTO person ){
+    public PersonDTO createNewPerson(PersonDTO personDTO){
         EntityManager em = emf.createEntityManager();
         try{
-            Person p = new Person(person.getfName(), person.getlName(), person.getEmail());
-            Address address = new Address(person.getStreet(), person.getAdditionalInfo());
-            CityInfo cityInfo = new CityInfo(person.getZip(), person.getCity());
+            Person p = new Person(personDTO.getfName(), personDTO.getlName(), personDTO.getEmail());
+            Address address = new Address(personDTO.getStreet(), personDTO.getCity());
+            CityInfo cityInfo = new CityInfo(personDTO.getZip(), personDTO.getCity());
             p.addAdress(address);
             cityInfo.addAdress(address);
-            for (Hobby hobby : person.getHobbies()) {
-                p.addHobby(hobby);
+            for (HobbyDTO hobbyDTO : personDTO.getHobbies()) {
+                p.addHobby(new Hobby(hobbyDTO.getName(), hobbyDTO.getDescription()));
             }
-            for(Phone phone: person.getPhones()){
-                p.addPhone(phone);
+            for(PhoneDTO phoneDTO: personDTO.getPhones()){
+                p.addPhone(new Phone(phoneDTO.getNumber(), phoneDTO.getDescription()));
             }
                       
             em.getTransaction();

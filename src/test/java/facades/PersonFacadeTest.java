@@ -76,6 +76,9 @@ public class PersonFacadeTest {
             
 
             em.getTransaction().commit();
+            
+            System.out.println("******************");
+            System.out.println(facade.getAllPersonsByHobby("fodbold").getAll());
         } finally {
             em.close();
         }

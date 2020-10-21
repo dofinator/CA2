@@ -2,8 +2,11 @@ package rest;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import dto.PersonDTO;
+import dto.PersonsDTO;
 import utils.EMF_Creator;
 import facades.PersonFacade;
+import java.util.List;
 import javax.persistence.EntityManagerFactory;
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
@@ -38,9 +41,9 @@ public class PersonResource {
     @GET
     @Produces({MediaType.APPLICATION_JSON})
     public String getPersonsByHobby(@PathParam("hobby") String hobby){
-        //List</*PersonDTO navn der passer til*/> personsByHobby = FACADE.getAllPersonsByHobby(hobby);
-        //return GSON.toJson(personByHobby);
-        return "";
+        PersonsDTO personsDTOList = FACADE.getAllPersonsByHobby(hobby);
+        
+        return GSON.toJson(personsDTOList);
     }
     
     @Path("{city}")
