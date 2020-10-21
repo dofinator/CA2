@@ -1,0 +1,9 @@
+entities\Hobby.class
+entities\Phone.class
+rest\PersonResource.class
+entities\CityInfo.class
+entities\Address.class
+rest\ApplicationConfig.class
+facades\PersonFacade.class
+entities\Person.class
+utils\EMF_Creator.class

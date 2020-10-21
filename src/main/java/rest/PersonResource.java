@@ -72,7 +72,26 @@ public class PersonResource {
         //return GSON.toJson(allZip);
         return "";
     }
-    //s
+    
+    //Henter ALLE informationer om en person ud fra telefonnummer
+    @Path("personphone/{phone}")
+    @GET
+    @Produces({MediaType.APPLICATION_JSON})
+    public String getPersonByPhone(@PathParam("phone") String phone){
+        PersonDTO person = FACADE.getPersonByPhone(phone);
+        return GSON.toJson(person);
+       
+    }
+    //Antallet af personer med den givne hobby
+    @Path("peoplecount/{hobby}")
+    @GET
+    @Produces({MediaType.APPLICATION_JSON})
+    public String getPeopleCountByHobby(@PathParam("hobby") String hobby){
+        long count = FACADE.getPeopleCountByHobby(hobby);
+        return GSON.toJson("Amount of people with given hobby" + count);
+       
+    }
+    
     
     
     
