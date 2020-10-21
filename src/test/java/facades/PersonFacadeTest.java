@@ -30,6 +30,8 @@ public class PersonFacadeTest {
     private static Hobby fodbold = new Hobby("fodbold", "spark til bold");
     private static Hobby håndbold = new Hobby("håndbold", "kast med bold");
     private static CityInfo charlottenlund = new CityInfo("2920", "charlottenlund");
+    private static CityInfo gentofte = new CityInfo("2920", "gentofte");
+    private static CityInfo hellerrup = new CityInfo("2900", "hellerrup");
     private static Address hovmarksvej = new Address("hovmarksvej", "10, st.tv");
     private static Address skovvej = new Address("skovvej", "14, st.th");
     private static Phone phone1 = new Phone("44444444", "mobil");
@@ -66,6 +68,8 @@ public class PersonFacadeTest {
             em.persist(p1);
             em.persist(p2);
             
+            em.persist(gentofte);
+            em.persist(hellerrup);
             
             
           
@@ -103,6 +107,25 @@ public class PersonFacadeTest {
         int exp = 2;
         assertEquals(exp, p.getAll().size());
     }
+    
+    @Test
+    public void testGetHobbyCount(){
+        long count = facade.getHobbyCount("fodbold");
+        int exp = 2;
+        
+        assertEquals(exp, count);
+      
+    }
+    
+    
+    @Test
+    public void testGetAllZipCodes(){
+        List <String> zip = facade.getAllZipCodes();
+        int exp = 3;
+        
+        assertEquals(exp, zip.size());
+    }
+    
     
     
 }
