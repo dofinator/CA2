@@ -6,9 +6,15 @@
 package facades;
 
 import dto.PersonDTO;
+import entities.Address;
+import entities.CityInfo;
 import entities.Hobby;
+import entities.Person;
 import entities.Phone;
 import java.util.ArrayList;
+import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
+import utils.EMF_Creator;
 
 /**
  *
@@ -16,18 +22,21 @@ import java.util.ArrayList;
  */
 public class Main {
     public static void main(String[] args) {
-    PersonFacade p = new PersonFacade();
-    
-   
-    
-    ArrayList<Hobby> hobbies = new ArrayList();
-    hobbies.add(new Hobby("hashashsh", "sadasdasd"));
-    
-     ArrayList<Phone> phones = new ArrayList();
-    phones.add(new Phone("hashashsh", "sadasdasd"));
-
-    PersonDTO person = new PersonDTO("Sumit", "Dey", "sumitdey0007@gmail.com", "taastrupvej123", "taastrup", "2630", hobbies, phones);
-        System.out.println(p.createNewPerson(person));
+        PersonFacade pf = new PersonFacade();
+     
+        Person person = new Person("Sebastian", "Hansen", "email@gmail.dk");
+        Address address = new Address("Lyngbyvej", "Ligger i Lyngby");
+        Hobby hobby = new Hobby("Fodbold", "en sport");
+        Phone phone = new Phone("12348765", "mobil");
+        CityInfo cityInfo = new CityInfo("2800", "Lyngby");
         
+        person.addAdress(address);
+        person.getAddress().setCityInfo(cityInfo);
+        person.addHobby(hobby);
+        person.addPhone(phone);
+        
+        PersonDTO pDTO = new PersonDTO(person);
+
+        pf.createNewPerson(pDTO);
     }
 }
