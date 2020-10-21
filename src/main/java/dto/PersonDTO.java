@@ -36,6 +36,8 @@ public class PersonDTO {
         for (Phone phone : person.getPhones()) {
             this.phones.add(new PhoneDTO(phone));
         }
+      
+        this.additionalInfo = person.getAddress().getAdditionalInfo();
     }
 
     public long getId() {
@@ -45,6 +47,16 @@ public class PersonDTO {
     public void setId(long id) {
         this.id = id;
     }
+
+    public String getAdditionalInfo() {
+        return additionalInfo;
+    }
+
+    public void setAdditionalInfo(String additionalInfo) {
+        this.additionalInfo = additionalInfo;
+    }
+    
+    
 
     public String getfName() {
         return fName;
@@ -89,6 +101,7 @@ public class PersonDTO {
     public String getZip() {
         return zip;
     }
+    
 
     public void setZip(String zip) {
         this.zip = zip;
