@@ -63,6 +63,20 @@ public class PersonFacade {
         }
 
     }
+    //Get the count of people with a given hobby 
+    public long getPeopleCountByHobby(String hobby) {
+        EntityManager em = emf.createEntityManager();
+        try {
+            Query query = em.createQuery("SELECT COUNT(p) FROM Person p JOIN p.hobbies hobbies WHERE hobbies.name = :hobby", Person.class);
+            query.setParameter("hobby", hobby);
+            long count = (long) query.getSingleResult();
+            
+            return count;
+        } finally {
+            em.close();
+        }
+
+    }
 
     //Get all persons living in a given city
     public PersonsDTO getAllPersonsByCity(String city) {
@@ -73,6 +87,19 @@ public class PersonFacade {
             List<Person> personList = query.getResultList();
 
             return new PersonsDTO(personList);
+        } finally {
+            em.close();
+        }
+    }
+     //Get the person given a phone number
+     public PersonDTO getPersonByPhone(String phone) {
+        EntityManager em = emf.createEntityManager();
+        try {
+            Query query = em.createQuery("SELECT p FROM Person p JOIN p.phones phones where phones.number = :phone");
+            query.setParameter("phone", phone);
+            Person person = (Person) query.getSingleResult();
+
+            return new PersonDTO(person);
         } finally {
             em.close();
         }
