@@ -57,7 +57,6 @@ public class PersonFacadeTest {
 
         try {
             em.getTransaction().begin();
-            em.createNamedQuery("Person.deleteAllRows").executeUpdate();
             em.createNativeQuery("alter table PERSON AUTO_INCREMENT = 1").executeUpdate();
             hovmarksvej.setCityInfo(charlottenlund);
             skovvej.setCityInfo(charlottenlund);
