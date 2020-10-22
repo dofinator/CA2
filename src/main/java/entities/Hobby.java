@@ -27,6 +27,14 @@ public class Hobby implements Serializable {
         
     }
 
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
     public Hobby(String name, String description) {
         this.name = name;
         this.description = description;
@@ -49,13 +57,6 @@ public class Hobby implements Serializable {
         this.name = name;
     }
 
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
-    }
 
     public List<Person> getPersons() {
         return persons;
