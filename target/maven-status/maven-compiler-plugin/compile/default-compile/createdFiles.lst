@@ -1,3 +1,4 @@
+exceptions\ExceptionDTO.class
 dto\PersonsDTO.class
 dto\PhoneDTO.class
 entities\Hobby.class
