@@ -1,4 +1,16 @@
 -------------------------------------------------------------------------------
 Test set: rest.PersonResourceTest
 -------------------------------------------------------------------------------
-Tests run: 1, Failures: 0, Errors: 0, Skipped: 1, Time elapsed: 0.001 s - in rest.PersonResourceTest
+Tests run: 3, Failures: 0, Errors: 3, Skipped: 0, Time elapsed: 6.01 s <<< FAILURE! - in rest.PersonResourceTest
+testDummyMsg  Time elapsed: 0.124 s  <<< ERROR!
+java.lang.IllegalArgumentException: NamedQuery of name: RenameMe.deleteAllRows not found.
+	at rest.PersonResourceTest.setUp(PersonResourceTest.java:71)
+
+testCount  Time elapsed: 0 s  <<< ERROR!
+java.lang.IllegalArgumentException: NamedQuery of name: RenameMe.deleteAllRows not found.
+	at rest.PersonResourceTest.setUp(PersonResourceTest.java:71)
+
+testServerIsUp  Time elapsed: 0.001 s  <<< ERROR!
+java.lang.IllegalArgumentException: NamedQuery of name: RenameMe.deleteAllRows not found.
+	at rest.PersonResourceTest.setUp(PersonResourceTest.java:71)
+
