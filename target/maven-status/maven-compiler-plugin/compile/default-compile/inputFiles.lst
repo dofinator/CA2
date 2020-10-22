@@ -1,27 +1,3 @@
-<<<<<<< HEAD
-C:\Users\lukas\Skrivebord\3.SEM\3SemOpg\Flow2_Week3\CA2\src\main\java\entities\Address.java
-C:\Users\lukas\Skrivebord\3.SEM\3SemOpg\Flow2_Week3\CA2\src\main\java\dto\PhoneDTO.java
-C:\Users\lukas\Skrivebord\3.SEM\3SemOpg\Flow2_Week3\CA2\src\main\java\entities\Person.java
-C:\Users\lukas\Skrivebord\3.SEM\3SemOpg\Flow2_Week3\CA2\src\main\java\entities\Phone.java
-C:\Users\lukas\Skrivebord\3.SEM\3SemOpg\Flow2_Week3\CA2\src\main\java\exceptions\MissingInputException.java
-C:\Users\lukas\Skrivebord\3.SEM\3SemOpg\Flow2_Week3\CA2\src\main\java\rest\PersonResource.java
-C:\Users\lukas\Skrivebord\3.SEM\3SemOpg\Flow2_Week3\CA2\src\main\java\dto\AddressDTO.java
-C:\Users\lukas\Skrivebord\3.SEM\3SemOpg\Flow2_Week3\CA2\src\main\java\exceptions\MissingInputExceptionMapper.java
-C:\Users\lukas\Skrivebord\3.SEM\3SemOpg\Flow2_Week3\CA2\src\main\java\facades\IPersonFacade.java
-C:\Users\lukas\Skrivebord\3.SEM\3SemOpg\Flow2_Week3\CA2\src\main\java\entities\CityInfo.java
-C:\Users\lukas\Skrivebord\3.SEM\3SemOpg\Flow2_Week3\CA2\src\main\java\utils\EMF_Creator.java
-C:\Users\lukas\Skrivebord\3.SEM\3SemOpg\Flow2_Week3\CA2\src\main\java\facades\Main.java
-C:\Users\lukas\Skrivebord\3.SEM\3SemOpg\Flow2_Week3\CA2\src\main\java\dto\HobbyDTO.java
-C:\Users\lukas\Skrivebord\3.SEM\3SemOpg\Flow2_Week3\CA2\src\main\java\exceptions\PersonNotFoundException.java
-C:\Users\lukas\Skrivebord\3.SEM\3SemOpg\Flow2_Week3\CA2\src\main\java\dto\PersonsDTO.java
-C:\Users\lukas\Skrivebord\3.SEM\3SemOpg\Flow2_Week3\CA2\src\main\java\exceptions\GenericExceptionMapper.java
-C:\Users\lukas\Skrivebord\3.SEM\3SemOpg\Flow2_Week3\CA2\src\main\java\dto\PersonDTO.java
-C:\Users\lukas\Skrivebord\3.SEM\3SemOpg\Flow2_Week3\CA2\src\main\java\exceptions\PersonNotFoundExceptionMapper.java
-C:\Users\lukas\Skrivebord\3.SEM\3SemOpg\Flow2_Week3\CA2\src\main\java\rest\ApplicationConfig.java
-C:\Users\lukas\Skrivebord\3.SEM\3SemOpg\Flow2_Week3\CA2\src\main\java\facades\PersonFacade.java
-C:\Users\lukas\Skrivebord\3.SEM\3SemOpg\Flow2_Week3\CA2\src\main\java\entities\Hobby.java
-C:\Users\lukas\Skrivebord\3.SEM\3SemOpg\Flow2_Week3\CA2\src\main\java\exceptions\ExceptionDTO.java
-=======
 C:\Users\phill\OneDrive\Skrivebord\CA2\src\main\java\dto\PersonDTO.java
 C:\Users\phill\OneDrive\Skrivebord\CA2\src\main\java\dto\HobbyDTO.java
 C:\Users\phill\OneDrive\Skrivebord\CA2\src\main\java\rest\ApplicationConfig.java
@@ -32,6 +8,7 @@ C:\Users\phill\OneDrive\Skrivebord\CA2\src\main\java\exceptions\PersonNotFoundEx
 C:\Users\phill\OneDrive\Skrivebord\CA2\src\main\java\entities\Hobby.java
 C:\Users\phill\OneDrive\Skrivebord\CA2\src\main\java\dto\AddressDTO.java
 C:\Users\phill\OneDrive\Skrivebord\CA2\src\main\java\exceptions\GenericExceptionMapper.java
+C:\Users\phill\OneDrive\Skrivebord\CA2\src\main\java\dto\CityInfoDTO.java
 C:\Users\phill\OneDrive\Skrivebord\CA2\src\main\java\exceptions\PersonNotFoundException.java
 C:\Users\phill\OneDrive\Skrivebord\CA2\src\main\java\exceptions\MissingInputException.java
 C:\Users\phill\OneDrive\Skrivebord\CA2\src\main\java\facades\PersonFacade.java
@@ -44,4 +21,3 @@ C:\Users\phill\OneDrive\Skrivebord\CA2\src\main\java\facades\IPersonFacade.java
 C:\Users\phill\OneDrive\Skrivebord\CA2\src\main\java\entities\Address.java
 C:\Users\phill\OneDrive\Skrivebord\CA2\src\main\java\entities\Person.java
 C:\Users\phill\OneDrive\Skrivebord\CA2\src\main\java\exceptions\ExceptionDTO.java
->>>>>>> d449b5112b3e7f864a1bab57a10580e6f2987955
