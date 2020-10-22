@@ -52,24 +52,6 @@ public class PersonResource {
         return GSON.toJson(personsDTOList);
     }
 
-    @Path("{city}")
-    @GET
-    @Produces({MediaType.APPLICATION_JSON})
-    public String getPhonesByCity(@PathParam("city") String city) {
-        //List</*PersonDTO navn der passer til*/> phonesByCity= FACADE.getAllPhonesByCity(city);
-        //return GSON.toJson(personByCity);
-        return "";
-    }
-
-    @Path("hobbycount/{hobby}")
-    @GET
-    @Produces({MediaType.APPLICATION_JSON})
-    public String getHobbyCount(@PathParam("hobby") String hobby) {
-        //List</*PersonDTO navn der passer til*/> hobbyCount = FACADE.getHobbyCount(hobby);
-        //return GSON.toJson(hobbyCount);
-        return "";
-    }
-
     @Path("zip/{zip}")
     @GET
     @Produces({MediaType.APPLICATION_JSON})
