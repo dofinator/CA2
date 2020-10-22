@@ -1,5 +1,6 @@
 package facades;
 
+import dto.PersonDTO;
 import dto.PersonsDTO;
 import entities.Address;
 import entities.CityInfo;
@@ -36,8 +37,8 @@ public class PersonFacadeTest {
     private static Address hovmarksvej = new Address("hovmarksvej");
     private static Address skovvej = new Address("skovvej");
     private static Phone phone1 = new Phone("44444444", "mobil");
-    private static Phone phone2 = new Phone("44444444", "hjemmetelefon");
-    
+    private static Phone phone2 = new Phone("33333333", "hjemmetelefon");
+    private static Phone phone3 = new Phone("22222222", "hjemmetelefon");
 
     public PersonFacadeTest() {
     }
@@ -46,10 +47,11 @@ public class PersonFacadeTest {
     public static void setUpClass() {
         emf = EMF_Creator.createEntityManagerFactoryForTest();
         facade = PersonFacade.getPersonFacade(emf);
-         EntityManager em = emf.createEntityManager();
+        EntityManager em = emf.createEntityManager();
+        
+        
         try {
             em.getTransaction().begin();
-            
             hovmarksvej.setCityInfo(charlottenlund);
             skovvej.setCityInfo(charlottenlund);
             
@@ -57,29 +59,26 @@ public class PersonFacadeTest {
             p2.addAdress(hovmarksvej);
             p1.addHobby(fodbold);
             p2.addHobby(fodbold);
-            
+            p2.addPhone(phone3);
+            p1.addPhone(phone1);
             em.persist(fodbold);
             em.persist(charlottenlund);
             em.persist(hovmarksvej);
             em.persist(skovvej);
-            
+            em.persist(gentofte);
+            em.persist(hellerrup);
             
             
             
             em.persist(p1);
             em.persist(p2);
             
-            em.persist(gentofte);
-            em.persist(hellerrup);
             
-            
-          
-            
+           
 
             em.getTransaction().commit();
-            
-            System.out.println("******************");
-            System.out.println(facade.getAllPersonsByHobby("fodbold").getAll());
+
+           
         } finally {
             em.close();
         }
@@ -89,47 +88,74 @@ public class PersonFacadeTest {
     public static void tearDownClass() {
     }
 
-   
-
     @AfterEach
     public void tearDown() {
     }
 
     @Test
     public void testGetAllPersonsByHobby() {
-         
+
         PersonsDTO p = facade.getAllPersonsByHobby("fodbold");
-        int exp = 2;
+        int exp = 3;
 
         assertEquals(exp, p.getAll().size());
     }
 
-    
     @Test
-    public void testGetAllPersonsByCity(){
+    public void testGetAllPersonsByCity() {
         PersonsDTO p = facade.getAllPersonsByCity("charlottenlund");
         int exp = 2;
         assertEquals(exp, p.getAll().size());
     }
-    
+
     @Test
-    public void testGetPeopleCountByHobby(){
+    public void testGetPeopleCountByHobby() {
         long count = facade.getPeopleCountByHobby("fodbold");
         int exp = 2;
-        
+
         assertEquals(exp, count);
-      
+
     }
-    
-    
+
     @Test
-    public void testGetAllZipCodes(){
-        List <String> zip = facade.getAllZipCodes();
+    public void testGetAllZipCodes() {
+        List<String> zip = facade.getAllZipCodes();
         int exp = 3;
-        
+
         assertEquals(exp, zip.size());
     }
-    
-    
-    
+
+    @Test
+    public void testGetPersonByPhone() {
+        PersonDTO p = facade.getPersonByPhone("44444444");
+        String expFname = "Sebastian";
+        assertEquals(p.getfName(), expFname);
+
+    }
+
+    @Test
+    public void testCreateNewPerson() {
+        Person p3 = new Person("jens", "ole", "email@hjælp.dk");
+        p3.addAdress(skovvej);
+        p3.addHobby(fodbold);
+        p3.addPhone(phone2);
+        PersonDTO p = facade.createNewPerson(new PersonDTO(p3));
+        PersonsDTO persons = facade.getAllPersonsByHobby("fodbold");
+        int exp = 4;
+
+        assertEquals(exp, persons.getAll().size());
+
+    }
+
+    @Test
+    public void testEditPerson() {
+        PersonDTO p = new PersonDTO(p2);
+        p.setEmail("nyemail@email.dk");
+
+        PersonDTO yalla = facade.editPerson(p);
+        String expEmail = "nyemail@email.dk";
+        assertEquals(yalla.getEmail(), expEmail);
+
+    }
+
 }
