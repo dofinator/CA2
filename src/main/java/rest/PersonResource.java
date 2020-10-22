@@ -82,13 +82,31 @@ public class PersonResource {
         return GSON.toJson(person);
        
     }
+    //Find på et bedre pathnavn
+      @Path("persons/{city}")
+    @GET
+    @Produces({MediaType.APPLICATION_JSON})
+    public String getPersonsByCity(@PathParam("city") String city){
+        PersonsDTO allPersons =  FACADE.getAllPersonsByCity(city);
+        return GSON.toJson(allPersons);
+       
+    }
     //Antallet af personer med den givne hobby
     @Path("peoplecount/{hobby}")
     @GET
     @Produces({MediaType.APPLICATION_JSON})
     public String getPeopleCountByHobby(@PathParam("hobby") String hobby){
         long count = FACADE.getPeopleCountByHobby(hobby);
-        return GSON.toJson("Amount of people with given hobby" + count);
+        return GSON.toJson("Amount of people with given hobby: " + count);
+       
+    }
+      //Antallet af personer med den givne hobby
+    @Path("zip")
+    @GET
+    @Produces({MediaType.APPLICATION_JSON})
+    public String getAllZipCode(){
+        List<String> ZIPCodes = FACADE.getAllZipCodes();
+        return GSON.toJson(ZIPCodes);
        
     }
     

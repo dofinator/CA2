@@ -1,9 +1,15 @@
+dto\PersonsDTO.class
+dto\PhoneDTO.class
 entities\Hobby.class
 entities\Phone.class
+facades\Main.class
 rest\PersonResource.class
 entities\CityInfo.class
+dto\HobbyDTO.class
 entities\Address.class
+dto\AddressDTO.class
 rest\ApplicationConfig.class
 facades\PersonFacade.class
+dto\PersonDTO.class
 entities\Person.class
 utils\EMF_Creator.class

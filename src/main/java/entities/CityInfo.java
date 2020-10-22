@@ -12,19 +12,17 @@ import javax.persistence.OneToMany;
 
 @Entity
 public class CityInfo implements Serializable {
-
     private static final long serialVersionUID = 1L;
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
+    //@Column(length = 4)
     private String zip;
+    //@Column(length=35)
     private String city;
 
     @OneToMany(mappedBy = "cityInfo", cascade = CascadeType.PERSIST)
     List<Address> addresses;
     
-    
-
+  
     public CityInfo() {
     }
 
@@ -38,13 +36,6 @@ public class CityInfo implements Serializable {
         return zip;
     }
 
-    public long getId() {
-        return id;
-    }
-
-    public void setId(long id) {
-        this.id = id;
-    }
 
     public void setZip(String zip) {
         this.zip = zip;
