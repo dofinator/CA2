@@ -31,10 +31,10 @@ public class PersonFacadeTest {
     private static Hobby fodbold = new Hobby("fodbold", "spark til bold");
     private static Hobby håndbold = new Hobby("håndbold", "kast med bold");
     private static CityInfo charlottenlund = new CityInfo("2920", "charlottenlund");
-    private static CityInfo gentofte = new CityInfo("2920", "gentofte");
+    private static CityInfo gentofte = new CityInfo("2820", "gentofte");
     private static CityInfo hellerrup = new CityInfo("2900", "hellerrup");
-    private static Address hovmarksvej = new Address("hovmarksvej", "10, st.tv");
-    private static Address skovvej = new Address("skovvej", "14, st.th");
+    private static Address hovmarksvej = new Address("hovmarksvej");
+    private static Address skovvej = new Address("skovvej");
     private static Phone phone1 = new Phone("44444444", "mobil");
     private static Phone phone2 = new Phone("44444444", "hjemmetelefon");
     
@@ -113,8 +113,8 @@ public class PersonFacadeTest {
     }
     
     @Test
-    public void testGetHobbyCount(){
-        long count = facade.getHobbyCount("fodbold");
+    public void testGetPeopleCountByHobby(){
+        long count = facade.getPeopleCountByHobby("fodbold");
         int exp = 2;
         
         assertEquals(exp, count);

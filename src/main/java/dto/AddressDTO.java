@@ -14,15 +14,14 @@ import java.util.List;
  * @author sebas
  */
 public class AddressDTO {
+
     private String street;
-    private String additionalInfo;
 
     public AddressDTO() {
     }
 
     public AddressDTO(Address address) {
         this.street = address.getStreet();
-        this.additionalInfo = address.getAdditionalInfo();
     }
 
     public String getStreet() {
@@ -33,13 +32,4 @@ public class AddressDTO {
         this.street = street;
     }
 
-    public String getAdditionalInfo() {
-        return additionalInfo;
-    }
-
-    public void setAdditionalInfo(String additionalInfo) {
-        this.additionalInfo = additionalInfo;
-    }
-    
-    
 }

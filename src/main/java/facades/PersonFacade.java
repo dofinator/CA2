@@ -64,6 +64,7 @@ public class PersonFacade {
 
     }
     //Get the count of people with a given hobby 
+    
     public long getPeopleCountByHobby(String hobby) {
         EntityManager em = emf.createEntityManager();
         try {
@@ -92,6 +93,7 @@ public class PersonFacade {
         }
     }
      //Get the person given a phone number
+    
      public PersonDTO getPersonByPhone(String phone) {
         EntityManager em = emf.createEntityManager();
         try {
@@ -103,21 +105,6 @@ public class PersonFacade {
         } finally {
             em.close();
         }
-    }
-
-    //get the number of people with a given hobby
-    public long getHobbyCount(String hobby) {
-        EntityManager em = emf.createEntityManager();
-        try {
-            Query query = em.createQuery("SELECT COUNT(p) FROM Person p JOIN p.hobbies hobbies WHERE hobbies.name = :hobby");
-            query.setParameter("hobby", hobby);
-            long hobbyCount = (long) query.getSingleResult();
-
-            return hobbyCount;
-        } finally {
-            em.close();
-        }
-
     }
 
     //get a list of all zip codes in DK
@@ -137,11 +124,16 @@ public class PersonFacade {
     public PersonDTO createNewPerson(PersonDTO personDTO){
         EntityManager em = emf.createEntityManager();
         try{
+            Query q = em.createQuery("SELECT c FROM CityInfo c WHERE c.zip = :givenZip");
+            q.setParameter("givenZip", personDTO.getZip());
+            
+            CityInfo cityInfo = (CityInfo) q.getSingleResult();
             Person p = new Person(personDTO.getfName(), personDTO.getlName(), personDTO.getEmail());
-            Address address = new Address(personDTO.getStreet(), personDTO.getCity());
-            CityInfo cityInfo = new CityInfo(personDTO.getZip(), personDTO.getCity());
+            Address address = new Address(personDTO.getStreet());
+            
             p.addAdress(address);
-            cityInfo.addAdress(address);
+            p.getAddress().setCityInfo(cityInfo);
+            
             for (HobbyDTO hobbyDTO : personDTO.getHobbies()) {
                 p.addHobby(new Hobby(hobbyDTO.getName(), hobbyDTO.getDescription()));
             }
@@ -149,8 +141,9 @@ public class PersonFacade {
                 p.addPhone(new Phone(phoneDTO.getNumber(), phoneDTO.getDescription()));
             }
                       
-            em.getTransaction();
+            em.getTransaction().begin();
             em.persist(p);
+            em.persist(address);
             em.getTransaction().commit();
             
             return new PersonDTO(p);
