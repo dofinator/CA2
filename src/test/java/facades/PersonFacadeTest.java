@@ -7,6 +7,7 @@ import entities.CityInfo;
 import entities.Hobby;
 import entities.Person;
 import entities.Phone;
+import exceptions.PersonNotFoundException;
 import java.util.ArrayList;
 import java.util.List;
 import utils.EMF_Creator;
@@ -93,7 +94,7 @@ public class PersonFacadeTest {
     }
 
     @Test
-    public void testGetAllPersonsByHobby() {
+    public void testGetAllPersonsByHobby() throws PersonNotFoundException {
 
         PersonsDTO p = facade.getAllPersonsByHobby("fodbold");
         int exp = 3;
@@ -102,14 +103,14 @@ public class PersonFacadeTest {
     }
 
     @Test
-    public void testGetAllPersonsByCity() {
+    public void testGetAllPersonsByCity() throws PersonNotFoundException {
         PersonsDTO p = facade.getAllPersonsByCity("charlottenlund");
         int exp = 2;
         assertEquals(exp, p.getAll().size());
     }
 
     @Test
-    public void testGetPeopleCountByHobby() {
+    public void testGetPeopleCountByHobby() throws PersonNotFoundException {
         long count = facade.getPeopleCountByHobby("fodbold");
         int exp = 2;
 
@@ -126,7 +127,7 @@ public class PersonFacadeTest {
     }
 
     @Test
-    public void testGetPersonByPhone() {
+    public void testGetPersonByPhone() throws PersonNotFoundException {
         PersonDTO p = facade.getPersonByPhone("44444444");
         String expFname = "Sebastian";
         assertEquals(p.getfName(), expFname);
@@ -134,7 +135,7 @@ public class PersonFacadeTest {
     }
 
     @Test
-    public void testCreateNewPerson() {
+    public void testCreateNewPerson() throws PersonNotFoundException {
         Person p3 = new Person("jens", "ole", "email@hjælp.dk");
         p3.addAdress(skovvej);
         p3.addHobby(fodbold);
