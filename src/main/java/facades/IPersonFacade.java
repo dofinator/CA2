@@ -14,7 +14,6 @@ import entities.CityInfo;
 import entities.Hobby;
 import entities.Person;
 import entities.Phone;
-import exceptions.HobbyNotFoundException;
 import exceptions.PersonNotFoundException;
 import java.util.List;
 import javax.persistence.EntityManager;
@@ -40,6 +39,6 @@ public interface IPersonFacade {
     //create a person
     public PersonDTO createNewPerson(PersonDTO personDTO);
     //edit a person
-    public PersonDTO editPerson(PersonDTO pDTO);
+    public PersonDTO editPerson(PersonDTO pDTO) throws PersonNotFoundException;
     
 }

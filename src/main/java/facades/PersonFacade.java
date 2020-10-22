@@ -9,7 +9,6 @@ import entities.CityInfo;
 import entities.Hobby;
 import entities.Person;
 import entities.Phone;
-import exceptions.HobbyNotFoundException;
 import exceptions.PersonNotFoundException;
 import java.util.List;
 import javax.persistence.EntityManager;
@@ -105,14 +104,7 @@ public class PersonFacade implements IPersonFacade{
         try {
             Query query = em.createQuery("SELECT p FROM Person p JOIN p.phones phones where phones.number = :phone");
             query.setParameter("phone", phone);
-            
             Person person = (Person) query.getSingleResult();
-            
-            
-            
-            
-            
-
             return new PersonDTO(person);
         } finally {
             em.close();
@@ -165,10 +157,13 @@ public class PersonFacade implements IPersonFacade{
     }
 
     //edit a person
-    public PersonDTO editPerson(PersonDTO pDTO) {
+    @Override
+    public PersonDTO editPerson(PersonDTO pDTO) throws PersonNotFoundException {
         EntityManager em = emf.createEntityManager();
         Person person = em.find(Person.class, pDTO.getId());
-
+          if(person == null){
+            throw new PersonNotFoundException("Could not edit the person with the provided id");
+        }
         Query q = em.createQuery("SELECT c FROM CityInfo c WHERE c.zip = :givenZip");
         q.setParameter("givenZip", pDTO.getZip());
         CityInfo cityInfo = (CityInfo) q.getSingleResult();
@@ -204,18 +199,18 @@ public class PersonFacade implements IPersonFacade{
     }
 
     //delete a person
-    /*
-    public String deletePerson(long id){
+    public PersonDTO deletePerson(long id) throws PersonNotFoundException{
         EntityManager em = emf.createEntityManager();
+        Person person = em.find(Person.class, id);
+        if(person == null){
+            throw new PersonNotFoundException("The provided id does not belong to any person");
+        }
         try{
             Query query = em.createQuery("DELETE p FROM Person p WHERE p.id = :id");
-            
-            return 
+            return new PersonDTO(person);
         } finally {
             em.close();
         }
     }
-     */
-
-  
+     
 }
