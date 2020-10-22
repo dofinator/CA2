@@ -12,6 +12,7 @@ import entities.Phone;
  * @author sebas
  */
 public class PhoneDTO {
+
     private String number;
     private String description;
 
@@ -39,4 +40,5 @@ public class PhoneDTO {
         this.description = description;
     }
     
+
 }

@@ -28,6 +28,15 @@ public class Phone implements Serializable {
         this.description = description;
     }
 
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    
     public long getId() {
         return id;
     }
@@ -44,13 +53,6 @@ public class Phone implements Serializable {
         this.number = number;
     }
 
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
-    }
 
     public Person getPerson() {
         return person;

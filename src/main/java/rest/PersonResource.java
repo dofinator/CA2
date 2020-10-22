@@ -11,6 +11,7 @@ import javax.persistence.EntityManagerFactory;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
+import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
@@ -125,5 +126,16 @@ public class PersonResource {
         PersonDTO p = GSON.fromJson(person, PersonDTO.class);
         p = FACADE.createNewPerson(p);
         return Response.ok(p).build();
+    }
+
+    @PUT
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Produces(MediaType.APPLICATION_JSON)
+    @Path("edit/{id}")
+    public Response editPerson(@PathParam("id") long id, String person){
+        PersonDTO p = GSON.fromJson(person, PersonDTO.class);
+        p.setId(id);
+        PersonDTO personEdit = FACADE.editPerson(p);
+        return Response.ok(personEdit).build();
     }
 }
