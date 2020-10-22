@@ -4,6 +4,7 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import dto.PersonDTO;
 import dto.PersonsDTO;
+import exceptions.PersonNotFoundException;
 import utils.EMF_Creator;
 import facades.PersonFacade;
 import java.util.List;
@@ -45,7 +46,7 @@ public class PersonResource {
     @Path("hobby/{hobby}")
     @GET
     @Produces({MediaType.APPLICATION_JSON})
-    public String getPersonsByHobby(@PathParam("hobby") String hobby) {
+    public String getPersonsByHobby(@PathParam("hobby") String hobby) throws PersonNotFoundException {
         PersonsDTO personsDTOList = FACADE.getAllPersonsByHobby(hobby);
 
         return GSON.toJson(personsDTOList);
@@ -82,7 +83,7 @@ public class PersonResource {
     @Path("personphone/{phone}")
     @GET
     @Produces({MediaType.APPLICATION_JSON})
-    public String getPersonByPhone(@PathParam("phone") String phone) {
+    public String getPersonByPhone(@PathParam("phone") String phone) throws PersonNotFoundException {
         PersonDTO person = FACADE.getPersonByPhone(phone);
         return GSON.toJson(person);
 
@@ -92,7 +93,7 @@ public class PersonResource {
     @Path("persons/{city}")
     @GET
     @Produces({MediaType.APPLICATION_JSON})
-    public String getPersonsByCity(@PathParam("city") String city) {
+    public String getPersonsByCity(@PathParam("city") String city) throws PersonNotFoundException {
         PersonsDTO allPersons = FACADE.getAllPersonsByCity(city);
         return GSON.toJson(allPersons);
 
@@ -102,7 +103,7 @@ public class PersonResource {
     @Path("peoplecount/{hobby}")
     @GET
     @Produces({MediaType.APPLICATION_JSON})
-    public String getPeopleCountByHobby(@PathParam("hobby") String hobby) {
+    public String getPeopleCountByHobby(@PathParam("hobby") String hobby) throws PersonNotFoundException {
         long count = FACADE.getPeopleCountByHobby(hobby);
         return GSON.toJson("Amount of people with given hobby: " + count);
 
