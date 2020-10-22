@@ -1,10 +1,4 @@
 -------------------------------------------------------------------------------
 Test set: facades.PersonFacadeTest
 -------------------------------------------------------------------------------
-<<<<<<< HEAD
-Tests run: 7, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 3.355 s - in facades.PersonFacadeTest
-=======
-
-Tests run: 4, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 11.702 s - in facades.PersonFacadeTest
-
->>>>>>> d449b5112b3e7f864a1bab57a10580e6f2987955
+Tests run: 7, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 3.472 s - in facades.PersonFacadeTest
