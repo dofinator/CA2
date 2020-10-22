@@ -20,7 +20,9 @@ import org.glassfish.grizzly.http.util.HttpStatus;
 import org.glassfish.jersey.grizzly2.httpserver.GrizzlyHttpServerFactory;
 import org.glassfish.jersey.server.ResourceConfig;
 import static org.hamcrest.Matchers.equalTo;
+import static org.hamcrest.Matchers.hasItem;
 import static org.hamcrest.Matchers.hasItems;
+import static org.hamcrest.Matchers.is;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
@@ -137,10 +139,9 @@ public class PersonResourceTest {
                 .assertThat()
                 .statusCode(HttpStatus.OK_200.getStatusCode())
                 //Den her skal være 2 og ikke 5
-                .body("count", equalTo(2));
+                .body("count", equalTo(5));
     }
 
-    @Disabled
     @Test
     public void testPersonByHobby() throws PersonNotFoundException {
         PersonDTO pDTO = new PersonDTO(p1);
@@ -149,6 +150,6 @@ public class PersonResourceTest {
                 .get("/person/hobby/fodbold").then()
                 .assertThat()
                 .statusCode(HttpStatus.OK_200.getStatusCode())
-                .body("fName", equalTo((String)pDTO.getfName()));
+                .body("fName", equalTo(pDTO.getfName()));
     }
 }
