@@ -58,9 +58,7 @@ public class PersonFacade implements IPersonFacade{
             Query query = em.createQuery("SELECT p FROM Person p JOIN p.hobbies hobbies WHERE hobbies.name = :hobby", Person.class);
             query.setParameter("hobby", hobby);
             List<Person> personList = query.getResultList();
-            if(personList.size() < 1){
-                throw new PersonNotFoundException("Could not find any persons with the given hobby");
-            }
+            
             return new PersonsDTO(personList);
         } finally {
             em.close();
