@@ -137,7 +137,7 @@ public class PersonResourceTest {
                 .assertThat()
                 .statusCode(HttpStatus.OK_200.getStatusCode())
                 //Den her skal være 2 og ikke 5
-                .body("count", equalTo(5));
+                .body("count", equalTo(2));
     }
 
     @Disabled
