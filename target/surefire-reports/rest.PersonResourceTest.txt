@@ -1,13 +1,4 @@
 -------------------------------------------------------------------------------
 Test set: rest.PersonResourceTest
 -------------------------------------------------------------------------------
-Tests run: 4, Failures: 1, Errors: 0, Skipped: 0, Time elapsed: 4.181 s <<< FAILURE! - in rest.PersonResourceTest
-testPersonByHobby  Time elapsed: 0.095 s  <<< FAILURE!
-java.lang.AssertionError: 
-1 expectation failed.
-JSON path fName doesn't match.
-Expected: Sebastian
-  Actual: null
-
-	at rest.PersonResourceTest.testPersonByHobby(PersonResourceTest.java:153)
-
+Tests run: 9, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 9.11 s - in rest.PersonResourceTest
