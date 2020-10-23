@@ -87,7 +87,7 @@ public class PersonResource {
     @Produces({MediaType.APPLICATION_JSON})
     public String getPeopleCountByHobby(@PathParam("hobby") String hobby) throws PersonNotFoundException {
         long count = FACADE.getPeopleCountByHobby(hobby);
-        return GSON.toJson("Amount of people with given hobby: " + count);
+        return "{\"count\":" + count + "}";
 
     }
     //Antallet af personer med den givne hobby
