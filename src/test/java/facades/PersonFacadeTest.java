@@ -1,5 +1,6 @@
 package facades;
 
+import com.sun.jndi.url.rmi.rmiURLContext;
 import dto.PersonDTO;
 import dto.PersonsDTO;
 import entities.Address;
@@ -60,7 +61,7 @@ public class PersonFacadeTest {
         emf = EMF_Creator.createEntityManagerFactoryForTest();
         facade = PersonFacade.getPersonFacade(emf);
         EntityManager em = emf.createEntityManager();
-
+        
         address1.setCityInfo(cityInfo1);
         p1.addAdress(address1);
         p1.addHobby(hobby1);
@@ -75,6 +76,16 @@ public class PersonFacadeTest {
 
         try {
             em.getTransaction().begin();
+            em.createNativeQuery("DELETE FROM PHONE").executeUpdate();
+            em.createNativeQuery("DELETE FROM HOBBY_PERSON").executeUpdate();  
+            em.createNativeQuery("DELETE FROM HOBBY").executeUpdate();
+            em.createNativeQuery("DELETE FROM PERSON").executeUpdate();
+            em.createNativeQuery("DELETE FROM ADDRESS").executeUpdate();
+            em.createNativeQuery("DELETE FROM CITYINFO").executeUpdate();
+            
+            
+            
+                    
 
             em.persist(cityInfo1);
             em.persist(address1);
