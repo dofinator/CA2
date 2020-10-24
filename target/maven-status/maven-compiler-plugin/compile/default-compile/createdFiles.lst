@@ -13,6 +13,7 @@ rest\ApplicationConfig.class
 dto\PersonDTO.class
 entities\Person.class
 facades\IPersonFacade.class
+cors\CorsFilter.class
 entities\Phone.class
 rest\PersonResource.class
 dto\HobbyDTO.class

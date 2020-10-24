@@ -9,6 +9,7 @@ import entities.CityInfo;
 import entities.Hobby;
 import entities.Person;
 import entities.Phone;
+import exceptions.MissingInputException;
 import exceptions.PersonNotFoundException;
 import java.util.List;
 import javax.persistence.EntityManager;
@@ -52,12 +53,19 @@ public class PersonFacade implements IPersonFacade {
 
     //Get all persons with a given hobby
     @Override
-    public PersonsDTO getAllPersonsByHobby(String hobby) throws PersonNotFoundException {
+    public PersonsDTO getAllPersonsByHobby(String hobby) throws PersonNotFoundException, MissingInputException {
         EntityManager em = emf.createEntityManager();
         try {
             Query query = em.createQuery("SELECT p FROM Person p JOIN p.hobbies hobbies WHERE hobbies.name = :hobby", Person.class);
             query.setParameter("hobby", hobby);
             List<Person> personList = query.getResultList();
+            
+            if(personList == null){
+                throw new PersonNotFoundException("No persons was found with the given hobby");
+            }
+            if(hobby.isEmpty()){
+                throw new MissingInputException("Du har ikke indtastet nogen hobby. Indtast en gyldig hobby");
+            }
 
             return new PersonsDTO(personList);
         } finally {
@@ -68,14 +76,17 @@ public class PersonFacade implements IPersonFacade {
 
     //Get the count of people with a given hobby 
     @Override
-    public long getPeopleCountByHobby(String hobby) throws PersonNotFoundException {
+    public long getPeopleCountByHobby(String hobby) throws PersonNotFoundException, MissingInputException {
         EntityManager em = emf.createEntityManager();
         try {
             Query query = em.createQuery("SELECT COUNT(p) FROM Person p JOIN p.hobbies hobbies WHERE hobbies.name = :hobby", Person.class);
             query.setParameter("hobby", hobby);
             long count = (long) query.getSingleResult();
             if (count < 1) {
-                throw new PersonNotFoundException("No persons was found the given hobby");
+                throw new PersonNotFoundException("No persons was found with the given hobby");
+            }
+            if(hobby.isEmpty()){
+                throw new MissingInputException("Du har ikke indtastet nogen hobby. Indtast en gyldig hobby");
             }
             return count;
         } finally {
@@ -84,7 +95,7 @@ public class PersonFacade implements IPersonFacade {
     }
 
     //Get all persons living in a given city
-    public PersonsDTO getAllPersonsByCity(String city) throws PersonNotFoundException {
+    public PersonsDTO getAllPersonsByCity(String city) throws PersonNotFoundException, MissingInputException {
         EntityManager em = emf.createEntityManager();
         try {
             Query query = em.createQuery("SELECT p FROM Person p WHERE p.address.cityInfo.city = :city");
@@ -93,6 +104,9 @@ public class PersonFacade implements IPersonFacade {
             if (personList.size() < 1) {
                 throw new PersonNotFoundException("No persons was found the given city");
             }
+            if(city.isEmpty()){
+                throw new MissingInputException("Du har ikke indtastet nogen by. Indtast en gyldig by");
+            }
             return new PersonsDTO(personList);
         } finally {
             em.close();
@@ -100,12 +114,16 @@ public class PersonFacade implements IPersonFacade {
     }
 
     //Get the person given a phone number
-    public PersonDTO getPersonByPhone(String phone) throws PersonNotFoundException {
+    @Override
+    public PersonDTO getPersonByPhone(String phone) throws PersonNotFoundException, MissingInputException {
         EntityManager em = emf.createEntityManager();
         try {
             Query query = em.createQuery("SELECT p FROM Person p JOIN p.phones phones where phones.number = :phone");
             query.setParameter("phone", phone);
             Person person = (Person) query.getSingleResult();
+            if(phone.isEmpty()){
+                throw new MissingInputException("Du har ikke indtastet noget telefonnummer. Indtast et gyldig hobby");
+            }
             return new PersonDTO(person);
         } finally {
             em.close();
@@ -113,6 +131,7 @@ public class PersonFacade implements IPersonFacade {
     }
 
     //get a list of all zip codes in DK
+    @Override
     public List<String> getAllZipCodes() {
         EntityManager em = emf.createEntityManager();
         try {
@@ -126,7 +145,8 @@ public class PersonFacade implements IPersonFacade {
     }
 
     //create a person
-    public PersonDTO createNewPerson(PersonDTO personDTO) {
+    @Override
+    public PersonDTO createNewPerson(PersonDTO personDTO){
         EntityManager em = emf.createEntityManager();
         try {
             Query q = em.createQuery("SELECT c FROM CityInfo c WHERE c.zip = :givenZip");
@@ -159,12 +179,14 @@ public class PersonFacade implements IPersonFacade {
 
     //edit a person
     @Override
-    public PersonDTO editPerson(PersonDTO pDTO) throws PersonNotFoundException {
+    public PersonDTO editPerson(PersonDTO pDTO) throws PersonNotFoundException{
         EntityManager em = emf.createEntityManager();
         Person person = em.find(Person.class, pDTO.getId());
-        if (person == null) {
-            throw new PersonNotFoundException("Could not edit the person with the provided id");
+       
+        if(person == null){
+            throw new PersonNotFoundException("Den indtastede person findes ikke");
         }
+        
         Query q = em.createQuery("SELECT c FROM CityInfo c WHERE c.zip = :givenZip");
         q.setParameter("givenZip", pDTO.getZip());
         CityInfo cityInfo = (CityInfo) q.getSingleResult();
