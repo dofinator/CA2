@@ -4,6 +4,7 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import dto.PersonDTO;
 import dto.PersonsDTO;
+import exceptions.MissingInputException;
 import exceptions.PersonNotFoundException;
 import utils.EMF_Creator;
 import facades.PersonFacade;
@@ -46,7 +47,7 @@ public class PersonResource {
     @Path("hobby/{hobby}")
     @GET
     @Produces({MediaType.APPLICATION_JSON})
-    public String getPersonsByHobby(@PathParam("hobby") String hobby) throws PersonNotFoundException {
+    public String getPersonsByHobby(@PathParam("hobby") String hobby) throws PersonNotFoundException, MissingInputException {
         PersonsDTO personsDTOList = FACADE.getAllPersonsByHobby(hobby);
 
         return GSON.toJson(personsDTOList);
@@ -65,7 +66,7 @@ public class PersonResource {
     @Path("personphone/{phone}")
     @GET
     @Produces({MediaType.APPLICATION_JSON})
-    public String getPersonByPhone(@PathParam("phone") String phone) throws PersonNotFoundException {
+    public String getPersonByPhone(@PathParam("phone") String phone) throws PersonNotFoundException, MissingInputException {
         PersonDTO person = FACADE.getPersonByPhone(phone);
         return GSON.toJson(person);
 
@@ -75,7 +76,7 @@ public class PersonResource {
     @Path("persons/{city}")
     @GET
     @Produces({MediaType.APPLICATION_JSON})
-    public String getPersonsByCity(@PathParam("city") String city) throws PersonNotFoundException {
+    public String getPersonsByCity(@PathParam("city") String city) throws PersonNotFoundException, MissingInputException {
         PersonsDTO allPersons = FACADE.getAllPersonsByCity(city);
         return GSON.toJson(allPersons);
 
@@ -85,7 +86,7 @@ public class PersonResource {
     @Path("peoplecount/{hobby}")
     @GET
     @Produces({MediaType.APPLICATION_JSON})
-    public String getPeopleCountByHobby(@PathParam("hobby") String hobby) throws PersonNotFoundException {
+    public String getPeopleCountByHobby(@PathParam("hobby") String hobby) throws PersonNotFoundException, MissingInputException {
         long count = FACADE.getPeopleCountByHobby(hobby);
         return "{\"count\":" + count + "}";
 

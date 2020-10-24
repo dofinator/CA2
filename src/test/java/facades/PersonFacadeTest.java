@@ -8,6 +8,7 @@ import entities.CityInfo;
 import entities.Hobby;
 import entities.Person;
 import entities.Phone;
+import exceptions.MissingInputException;
 import exceptions.PersonNotFoundException;
 import java.util.ArrayList;
 import java.util.List;
@@ -114,7 +115,7 @@ public class PersonFacadeTest {
     }
 
     @Test
-    public void getAllPersonsByHobby() throws PersonNotFoundException {
+    public void getAllPersonsByHobby() throws PersonNotFoundException, MissingInputException {
         PersonsDTO p = facade.getAllPersonsByHobby("fodbold");
         int exp = 2;
         assertEquals(exp, p.getAll().size(), "Expects the size of 2");
@@ -122,7 +123,7 @@ public class PersonFacadeTest {
     }
 
     @Test
-    public void getAllPersonsByCity() throws PersonNotFoundException {
+    public void getAllPersonsByCity() throws PersonNotFoundException, MissingInputException {
         PersonsDTO p = facade.getAllPersonsByCity("charlottenlund");
         int exp = 1;
         assertEquals(exp, p.getAll().size(), "Expects the size of 1");
@@ -130,7 +131,7 @@ public class PersonFacadeTest {
     }
 
     @Test
-    public void getPeopleCountByHobby() throws PersonNotFoundException {
+    public void getPeopleCountByHobby() throws PersonNotFoundException, MissingInputException {
         long count = facade.getPeopleCountByHobby("fodbold");
         int exp = 2;
         assertEquals(exp, count);
@@ -144,14 +145,14 @@ public class PersonFacadeTest {
     }
 
     @Test
-    public void getPersonByPhone() throws PersonNotFoundException {
+    public void getPersonByPhone() throws PersonNotFoundException, MissingInputException {
         PersonDTO p = facade.getPersonByPhone("28939700");
         String expFname = "Sebastian";
         assertEquals(p.getfName(), expFname);
     }
 
     @Test
-    public void createNewPerson() throws PersonNotFoundException {
+    public void createNewPerson() throws PersonNotFoundException, MissingInputException {
         Person p3 = new Person("jens", "ole", "email@hjælp.dk");
         p3.addAdress(address3);
         p3.addHobby(hobby2);
@@ -189,7 +190,7 @@ public class PersonFacadeTest {
     }
 
     @Test
-    public void getAllPersonsByHobbyError() throws PersonNotFoundException {
+    public void getAllPersonsByHobbyError() throws PersonNotFoundException, MissingInputException {
         String fakeCity = "CityThatDoesNotExist";
         try {
             PersonsDTO personsDTO = facade.getAllPersonsByCity(fakeCity);
@@ -199,7 +200,7 @@ public class PersonFacadeTest {
     }
 
     @Test
-    public void testGetAllPersonsByCityError() throws PersonNotFoundException {
+    public void testGetAllPersonsByCityError() throws PersonNotFoundException, MissingInputException {
         String fakeHobby = "HobbyThatDoesNotExist";
         try {
             PersonsDTO personsDTO = facade.getAllPersonsByHobby(fakeHobby);

@@ -1,4 +1,4 @@
 -------------------------------------------------------------------------------
 Test set: rest.PersonResourceTest
 -------------------------------------------------------------------------------
-Tests run: 7, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 5.408 s - in rest.PersonResourceTest
+Tests run: 7, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 3.476 s - in rest.PersonResourceTest
