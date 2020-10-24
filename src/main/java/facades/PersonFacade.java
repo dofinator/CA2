@@ -16,7 +16,7 @@ import javax.persistence.EntityManagerFactory;
 import javax.persistence.Query;
 import javax.persistence.TypedQuery;
 
-public class PersonFacade implements IPersonFacade{
+public class PersonFacade implements IPersonFacade {
 
     private static PersonFacade instance;
     private static EntityManagerFactory emf;
@@ -58,13 +58,14 @@ public class PersonFacade implements IPersonFacade{
             Query query = em.createQuery("SELECT p FROM Person p JOIN p.hobbies hobbies WHERE hobbies.name = :hobby", Person.class);
             query.setParameter("hobby", hobby);
             List<Person> personList = query.getResultList();
-            
+
             return new PersonsDTO(personList);
         } finally {
             em.close();
         }
 
     }
+
     //Get the count of people with a given hobby 
     @Override
     public long getPeopleCountByHobby(String hobby) throws PersonNotFoundException {
@@ -73,29 +74,31 @@ public class PersonFacade implements IPersonFacade{
             Query query = em.createQuery("SELECT COUNT(p) FROM Person p JOIN p.hobbies hobbies WHERE hobbies.name = :hobby", Person.class);
             query.setParameter("hobby", hobby);
             long count = (long) query.getSingleResult();
-            if(count < 1){
-               throw new PersonNotFoundException("No persons was found the given hobby");
+            if (count < 1) {
+                throw new PersonNotFoundException("No persons was found the given hobby");
             }
             return count;
         } finally {
             em.close();
         }
     }
+
     //Get all persons living in a given city
-    public PersonsDTO getAllPersonsByCity(String city) throws PersonNotFoundException{
+    public PersonsDTO getAllPersonsByCity(String city) throws PersonNotFoundException {
         EntityManager em = emf.createEntityManager();
         try {
             Query query = em.createQuery("SELECT p FROM Person p WHERE p.address.cityInfo.city = :city");
             query.setParameter("city", city);
             List<Person> personList = query.getResultList();
-            if(personList.size() < 1){
-             throw new PersonNotFoundException("No persons was found the given city");
+            if (personList.size() < 1) {
+                throw new PersonNotFoundException("No persons was found the given city");
             }
             return new PersonsDTO(personList);
         } finally {
             em.close();
         }
     }
+
     //Get the person given a phone number
     public PersonDTO getPersonByPhone(String phone) throws PersonNotFoundException {
         EntityManager em = emf.createEntityManager();
@@ -159,7 +162,7 @@ public class PersonFacade implements IPersonFacade{
     public PersonDTO editPerson(PersonDTO pDTO) throws PersonNotFoundException {
         EntityManager em = emf.createEntityManager();
         Person person = em.find(Person.class, pDTO.getId());
-          if(person == null){
+        if (person == null) {
             throw new PersonNotFoundException("Could not edit the person with the provided id");
         }
         Query q = em.createQuery("SELECT c FROM CityInfo c WHERE c.zip = :givenZip");
@@ -171,19 +174,15 @@ public class PersonFacade implements IPersonFacade{
         person.setEmail(pDTO.getEmail());
         person.getAddress().setStreet(pDTO.getStreet());
         person.getAddress().setCityInfo(cityInfo);
-        
-        int lastIndexOfHobbies = pDTO.getHobbies().size()-1;
-        int lastIndexOfPhones = pDTO.getPhones().size()-1;
-        
-        
 
-        Hobby newHobby = new Hobby(pDTO.getHobbies().get(lastIndexOfHobbies).getName(),
-                pDTO.getHobbies().get(lastIndexOfHobbies).getDescription());
-        person.addHobby(newHobby);
-
-        Phone newPhone = new Phone(pDTO.getPhones().get(lastIndexOfPhones).getNumber(),
-                pDTO.getPhones().get(lastIndexOfPhones).getDescription());
-        person.addPhone(newPhone);
+//        int lastIndexOfHobbies = pDTO.getHobbies().size() - 1;
+//        int lastIndexOfPhones = pDTO.getPhones().size() - 1;
+//        Hobby newHobby = new Hobby(pDTO.getHobbies().get(lastIndexOfHobbies).getName(),
+//                pDTO.getHobbies().get(lastIndexOfHobbies).getDescription());
+//        person.addHobby(newHobby);
+//        Phone newPhone = new Phone(pDTO.getPhones().get(lastIndexOfPhones).getNumber(),
+//                pDTO.getPhones().get(lastIndexOfPhones).getDescription());
+//        person.addPhone(newPhone);
 
         try {
             em.getTransaction().begin();
@@ -197,18 +196,18 @@ public class PersonFacade implements IPersonFacade{
     }
 
     //delete a person
-    public PersonDTO deletePerson(long id) throws PersonNotFoundException{
+    public PersonDTO deletePerson(long id) throws PersonNotFoundException {
         EntityManager em = emf.createEntityManager();
         Person person = em.find(Person.class, id);
-        if(person == null){
+        if (person == null) {
             throw new PersonNotFoundException("The provided id does not belong to any person");
         }
-        try{
+        try {
             Query query = em.createQuery("DELETE p FROM Person p WHERE p.id = :id");
             return new PersonDTO(person);
         } finally {
             em.close();
         }
     }
-     
+
 }

@@ -35,75 +35,92 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 //Uncomment the line below, to temporarily disable this test
+//@Disabled
 
 public class PersonResourceTest {
-
+    
     private static final int SERVER_PORT = 7777;
     private static final String SERVER_URL = "http://localhost/api";
-    private static Person p1, p2;
-    private static Hobby h1, h2;
-    private static Address a1;
-    private static Phone ph1, ph2;
-    private static CityInfo ci1;
-
+    
+    private static Person p1, p2, p3;
+    private static Hobby hobby1, hobby2;
+    private static Address address1, address2, address3;
+    private static Phone phone1, phone2, phone3;
+    private static CityInfo cityInfo1, cityInfo2, cityInfo3;
+    
     static final URI BASE_URI = UriBuilder.fromUri(SERVER_URL).port(SERVER_PORT).build();
     private static HttpServer httpServer;
     private static EntityManagerFactory emf;
-
+    
     static HttpServer startServer() {
         ResourceConfig rc = ResourceConfig.forApplication(new ApplicationConfig());
         return GrizzlyHttpServerFactory.createHttpServer(BASE_URI, rc);
     }
-
+    
     @BeforeAll
     public static void setUpClass() {
         //This method must be called before you request the EntityManagerFactory
         EMF_Creator.startREST_TestWithDB();
         emf = EMF_Creator.createEntityManagerFactoryForTest();
-
+        
         httpServer = startServer();
         //Setup RestAssured
         RestAssured.baseURI = SERVER_URL;
         RestAssured.port = SERVER_PORT;
         RestAssured.defaultParser = Parser.JSON;
-
+        
         EntityManager em = emf.createEntityManager();
+        
         p1 = new Person("Sebastian", "Hansen", "email@hhaa.dk");
         p2 = new Person("Lukas", "Bang", "yalla@habibi.dut");
-
-        h1 = new Hobby("fodbold", "bold med fod jalla");
-        h2 = new Hobby("håndbold", "bold med hånd jalla");
-
-        a1 = new Address("lyngbyvej");
-
-        ph1 = new Phone("1234561243", "mobil");
-        ph2 = new Phone("123451231233", "mobil");
-
-        ci1 = new CityInfo("2800", "Lyngby");
-
+        p3 = new Person("add", "add", "add@habibi.com");
+        
+        hobby1 = new Hobby("fodbold", "bold med fod");
+        hobby2 = new Hobby("håndbold", "bold med hånd");
+        
+        address1 = new Address("lyngbyvej 22");
+        address2 = new Address("fredensborgvej 244");
+        address3 = new Address("hillerødvej 2223");
+        
+        phone1 = new Phone("12345612", "mobil");
+        phone2 = new Phone("65884774", "mobil");
+        phone3 = new Phone("28456685", "mobil");
+        
+        cityInfo1 = new CityInfo("2800", "Lyngby");
+        cityInfo2 = new CityInfo("3480", "Fredensborg");
+        cityInfo3 = new CityInfo("3400", "Hillerød");
+        
+        address1.setCityInfo(cityInfo1);
+        address2.setCityInfo(cityInfo2);
+        address3.setCityInfo(cityInfo3);
+        
+        p1.addAdress(address1);
+        p1.addHobby(hobby1);
+        p1.addPhone(phone1);
+        
+        p2.addAdress(address2);
+        p2.addHobby(hobby1);
+        p2.addPhone(phone2);
+        
         try {
             em.getTransaction().begin();
-            p1.addHobby(h1);
-            p2.addHobby(h2);
-            a1.setCityInfo(ci1);
-            p1.addAdress(a1);
-            p1.addPhone(ph1);
-            p2.addPhone(ph2);
-
-            em.persist(h1);
-            em.persist(h2);
-            em.persist(a1);
-            em.persist(ph1);
-            em.persist(ph2);
-            em.persist(ci1);
+            
+            em.persist(address1);
+            em.persist(address2);
+            em.persist(address3);
+            em.persist(cityInfo1);
+            em.persist(cityInfo2);
+            em.persist(cityInfo3);
+            
             em.persist(p1);
             em.persist(p2);
+            
             em.getTransaction().commit();
         } finally {
             em.close();
         }
     }
-
+    
     @AfterAll
     public static void closeTestServer() {
         //System.in.read();
@@ -117,9 +134,9 @@ public class PersonResourceTest {
     //TODO -- Make sure to change the EntityClass used below to use YOUR OWN (renamed) Entity class
     @BeforeEach
     public void setUp() {
-
+        
     }
-
+    
     @Test
     public void testServerIsUp() {
         System.out.println("Testing is server UP");
@@ -136,7 +153,7 @@ public class PersonResourceTest {
                 .statusCode(HttpStatus.OK_200.getStatusCode())
                 .body("msg", equalTo("Hello World"));
     }
-
+    
     @Test
     public void testCount() throws Exception {
         given()
@@ -146,19 +163,19 @@ public class PersonResourceTest {
                 .statusCode(HttpStatus.OK_200.getStatusCode())
                 .body("count", equalTo(2));
     }
-
+    
     @Test
     public void testPersonByHobby() throws PersonNotFoundException {
-
+        
         given()
                 .contentType("application/json")
                 .get("/person/hobby/fodbold").then()
                 .assertThat()
                 .statusCode(HttpStatus.OK_200.getStatusCode())
                 .body("size()", equalTo(1));
-
+        
     }
-
+    
     @Test
     public void testGetAllPersonsByCity() throws PersonNotFoundException {
         given()
@@ -167,8 +184,9 @@ public class PersonResourceTest {
                 .assertThat()
                 .statusCode(HttpStatus.OK_200.getStatusCode())
                 .body("size()", equalTo(1));
-
+        
     }
+//
 
     @Test
     public void getPeopleCountByHobby() throws PersonNotFoundException {
@@ -177,9 +195,10 @@ public class PersonResourceTest {
                 .get("/person/peoplecount/fodbold").then()
                 .assertThat()
                 .statusCode(HttpStatus.OK_200.getStatusCode())
-                .body("count", equalTo(1));
-
+                .body("count", equalTo(2));
+        
     }
+//
 
     @Test
     public void getAllZipCodes() throws PersonNotFoundException {
@@ -188,50 +207,52 @@ public class PersonResourceTest {
                 .get("/person/zip").then()
                 .assertThat()
                 .statusCode(HttpStatus.OK_200.getStatusCode())
-                .body("size()", equalTo(1));
-
-    }
-
-    @Test
-    public void addPerson() throws PersonNotFoundException {
-        given()
-                .contentType(ContentType.JSON)
-                .body(new PersonDTO(p1))
-                .when()
-                .post("person/add")
-                .then()
-                .body("fName", equalTo("Sebastian"))
-                .body("lName", equalTo("Hansen"))
-                .body("email", equalTo("email@hhaa.dk"));
-
-    }
-
-    @Test
-    public void testEditPerson() {
-        Person person = new Person("Sumit", "Dey", "test@gmail.com");
-        Hobby hobby = new Hobby("fodbold", "bold med fod jalla");
-        Address address = new Address("lyngbyvej");
-        Phone phone = new Phone("1234561243", "mobil");
-        CityInfo ci = new CityInfo("2800", "Lyngby");
-        long id = 1;
-        person.setId(id);
-        person.addAdress(address);
-        person.addHobby(hobby);
-        person.addPhone(phone);
-        address.setCityInfo(ci);
+                .body("size()", equalTo(3));
         
-        PersonDTO personDTO = new PersonDTO(person);
-
-        given()
-                .contentType(ContentType.JSON)
-                .body(personDTO)
-                .when()
-                .put("person/edit/" + id)
-                .then()
-                .body("fName", equalTo("Sumit"))
-                .body("lName", equalTo("Dey"))
-                .body("email", equalTo("test@gmail.com"));
-
     }
+    
+//    @Test
+//    public void addPerson() throws PersonNotFoundException {
+//        p3.addAdress(address3);
+//        p3.addHobby(hobby2);
+//        p3.addPhone(phone3);
+//        given()
+//                .contentType(ContentType.JSON)
+//                .body(new PersonDTO(p3))
+//                .when()
+//                .post("person/add")
+//                .then()
+//                .body("fName", equalTo("add"))
+//                .body("lName", equalTo("add"))
+//                .body("email", equalTo("add@habibi.com"));
+//        
+//    }
 
+//    @Test
+//    public void testEditPerson() {
+//        Person person = new Person("Sumit", "Dey", "test@gmail.com");
+//        Hobby hobby = new Hobby("fodbold", "bold med fod jalla");
+//        Address address = new Address("lyngbyvej");
+//        Phone phone = new Phone("1234561243", "mobil");
+//        CityInfo ci = new CityInfo("2800", "Lyngby");
+//        long id = 1;
+//        person.setId(id);
+//        person.addAdress(address);
+//        person.addHobby(hobby);
+//        person.addPhone(phone);
+//        address.setCityInfo(ci);
+//
+//        PersonDTO personDTO = new PersonDTO(person);
+//
+//        given()
+//                .contentType(ContentType.JSON)
+//                .body(personDTO)
+//                .when()
+//                .put("person/edit/" + id)
+//                .then()
+//                .body("fName", equalTo("Sumit"))
+//                .body("lName", equalTo("Dey"))
+//                .body("email", equalTo("test@gmail.com"));
+//
+//    }
 }
