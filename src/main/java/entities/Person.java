@@ -22,11 +22,13 @@ public class Person implements Serializable {
     private String firstName;
     private String lastName;
     private String email;
+
     @OneToMany(mappedBy = "person", cascade = CascadeType.PERSIST)
     private List<Phone> phones;
+
     @ManyToMany(mappedBy = "persons", cascade = CascadeType.PERSIST)
     private List<Hobby> hobbies;
-    
+
     @ManyToOne
     private Address address;
 
@@ -79,7 +81,7 @@ public class Person implements Serializable {
 
     public void addPhone(Phone phone) {
         this.phones.add(phone);
-        if(phone != null){
+        if (phone != null) {
             phone.addPerson(this);
         }
     }
@@ -87,12 +89,11 @@ public class Person implements Serializable {
     public List<Hobby> getHobbies() {
         return hobbies;
     }
-    
+
     public void addHobby(Hobby hobby) {
-        this.hobbies.add(hobby);
-        if(hobby != null){
+        if (hobby != null) {
+            this.hobbies.add(hobby);
             hobby.getPersons().add(this);
-            
         }
     }
 
@@ -106,22 +107,21 @@ public class Person implements Serializable {
             address.getPersons().add(this);
         }
     }
-    
-    public void setStreet(String street){
+
+    public void setStreet(String street) {
         this.address.setStreet(street);
     }
 
-    public void setCity(String city){
+    public void setCity(String city) {
         this.address.getCityInfo().setCity(city);
     }
-    
-    public void setZip(String zip){
+
+    public void setZip(String zip) {
         this.address.getCityInfo().setZip(zip);
     }
-    
-    public void setPhone(String phoneNumber){
+
+    public void setPhone(String phoneNumber) {
         this.phones.get(0).setNumber(phoneNumber);
     }
-    
-    
+
 }

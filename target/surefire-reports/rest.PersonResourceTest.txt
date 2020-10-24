@@ -1,4 +1,31 @@
 -------------------------------------------------------------------------------
 Test set: rest.PersonResourceTest
 -------------------------------------------------------------------------------
-Tests run: 9, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 9.11 s - in rest.PersonResourceTest
+Tests run: 7, Failures: 3, Errors: 0, Skipped: 0, Time elapsed: 3.274 s <<< FAILURE! - in rest.PersonResourceTest
+testCount  Time elapsed: 0.066 s  <<< FAILURE!
+java.lang.AssertionError: 
+1 expectation failed.
+JSON path count doesn't match.
+Expected: <2>
+  Actual: 5
+
+	at rest.PersonResourceTest.testCount(PersonResourceTest.java:164)
+
+getAllZipCodes  Time elapsed: 0.032 s  <<< FAILURE!
+java.lang.AssertionError: 
+1 expectation failed.
+JSON path size() doesn't match.
+Expected: <3>
+  Actual: 6
+
+	at rest.PersonResourceTest.getAllZipCodes(PersonResourceTest.java:210)
+
+getPeopleCountByHobby  Time elapsed: 0.025 s  <<< FAILURE!
+java.lang.AssertionError: 
+1 expectation failed.
+JSON path count doesn't match.
+Expected: <2>
+  Actual: 4
+
+	at rest.PersonResourceTest.getPeopleCountByHobby(PersonResourceTest.java:198)
+
